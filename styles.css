@@ -199,20 +199,21 @@ a { text-decoration: none; color: inherit; }
 
 .nav-logo {
     display: flex;
-    align-items: baseline;
-    gap: 2px;
-    font-size: 1.4rem;
-    font-weight: 700;
+    align-items: center;
 }
 
-.logo-clear { color: var(--color-navy); }
-.logo-onc { color: var(--color-teal); }
-.logo-insights {
-    font-size: 0.7rem;
-    font-weight: 500;
-    color: var(--color-text-light);
-    margin-left: 6px;
-    letter-spacing: 0.05em;
+.logo-img {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+}
+
+.logo-img.logo-light {
+    height: 36px;
+}
+
+.footer-brand .logo-img {
+    height: 44px;
 }
 
 .nav-links {
@@ -1187,8 +1188,6 @@ a { text-decoration: none; color: inherit; }
 .footer-brand .nav-logo {
     margin-bottom: 16px;
 }
-
-.footer-brand .logo-clear { color: #fff; }
 
 .footer-brand p {
     font-size: 0.85rem;
