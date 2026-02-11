@@ -1,0 +1,360 @@
+/* ============================================
+   ClearOnc — About Us Page Styles
+   ============================================ */
+
+/* --- Active nav link --- */
+.nav-active {
+    color: var(--color-teal) !important;
+    font-weight: 600 !important;
+}
+
+/* ============================================
+   ABOUT HERO
+   ============================================ */
+.about-hero {
+    position: relative;
+    padding: 160px 0 80px;
+    background: linear-gradient(180deg, #f0faf5 0%, #ffffff 100%);
+    overflow: hidden;
+}
+
+.about-hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.about-hero-shape {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.06;
+}
+
+.about-hero-shape-1 {
+    width: 500px;
+    height: 500px;
+    background: var(--color-teal);
+    top: -150px;
+    right: -100px;
+    animation: float 20s ease-in-out infinite;
+}
+
+.about-hero-shape-2 {
+    width: 300px;
+    height: 300px;
+    background: var(--color-teal-light);
+    bottom: -80px;
+    left: -50px;
+    animation: float 15s ease-in-out infinite reverse;
+}
+
+.about-hero-content {
+    max-width: 720px;
+}
+
+.about-hero h1 {
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    color: var(--color-navy);
+    line-height: 1.15;
+    margin-bottom: 24px;
+    letter-spacing: -0.02em;
+}
+
+.about-hero-lead {
+    font-size: 1.15rem;
+    color: var(--color-text-light);
+    line-height: 1.7;
+    margin-bottom: 16px;
+}
+
+.about-hero-highlight {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-teal);
+    position: relative;
+    display: inline-block;
+}
+
+.about-hero-highlight::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-teal), transparent);
+    border-radius: 2px;
+}
+
+/* ============================================
+   MISSION / VALUES SECTION
+   ============================================ */
+.about-mission {
+    padding: 80px 0 100px;
+    background: var(--color-bg);
+}
+
+.mission-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+}
+
+.mission-content h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--color-navy);
+    margin-bottom: 20px;
+}
+
+.mission-content p {
+    font-size: 1rem;
+    color: var(--color-text-light);
+    line-height: 1.7;
+    margin-bottom: 16px;
+}
+
+.mission-content .btn {
+    margin-top: 12px;
+}
+
+.mission-values {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.value-card {
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    transition: all var(--transition);
+}
+
+.value-card:hover {
+    border-color: rgba(21, 129, 88, 0.2);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+}
+
+.value-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: rgba(21, 129, 88, 0.08);
+    border-radius: var(--radius-sm);
+    color: var(--color-teal);
+    margin-bottom: 14px;
+}
+
+.value-card h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--color-navy);
+    margin-bottom: 6px;
+}
+
+.value-card p {
+    font-size: 0.85rem;
+    color: var(--color-text-light);
+    line-height: 1.5;
+}
+
+/* ============================================
+   VISION / MISSION / PROMISE
+   ============================================ */
+.about-vision {
+    padding: 80px 0;
+    background: var(--color-bg-alt);
+}
+
+.vision-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+}
+
+.vision-card {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 36px;
+    transition: all var(--transition);
+}
+
+.vision-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-4px);
+}
+
+.vision-label {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-teal);
+    margin-bottom: 14px;
+}
+
+.vision-card p {
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--color-navy);
+    line-height: 1.6;
+}
+
+.vision-card-accent {
+    background: linear-gradient(135deg, var(--color-navy), var(--color-navy-light));
+    border-color: transparent;
+}
+
+.vision-card-accent .vision-label {
+    color: #2dd4a0;
+}
+
+.vision-card-accent p {
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.vision-card-accent:hover {
+    box-shadow: var(--shadow-xl);
+}
+
+/* ============================================
+   TEAM SECTION
+   ============================================ */
+.about-team {
+    padding: 100px 0;
+    background: var(--color-bg);
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.team-card {
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 32px;
+    text-align: center;
+    transition: all var(--transition);
+}
+
+.team-card:hover {
+    border-color: rgba(21, 129, 88, 0.2);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-6px);
+}
+
+.team-avatar {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.team-avatar-placeholder {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-navy), #1a3a5c);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.05em;
+    position: relative;
+}
+
+.team-avatar-placeholder::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 2px solid rgba(21, 129, 88, 0.2);
+}
+
+.team-card:hover .team-avatar-placeholder::after {
+    border-color: var(--color-teal);
+}
+
+.team-info h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-navy);
+    margin-bottom: 4px;
+}
+
+.team-role {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--color-text-light);
+    margin-bottom: 14px;
+}
+
+.team-linkedin {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-lighter);
+    transition: all var(--transition);
+}
+
+.team-linkedin:hover {
+    background: #0077B5;
+    border-color: #0077B5;
+    color: #fff;
+    transform: scale(1.1);
+}
+
+/* ============================================
+   RESPONSIVE — ABOUT PAGE
+   ============================================ */
+@media (max-width: 1024px) {
+    .mission-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+    }
+
+    .vision-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .team-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .about-hero {
+        padding: 120px 0 60px;
+    }
+
+    .mission-values {
+        grid-template-columns: 1fr;
+    }
+
+    .team-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+}
