@@ -194,7 +194,7 @@ a { text-decoration: none; color: inherit; }
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 72px;
+    height: 90px;
 }
 
 .nav-logo {
@@ -203,17 +203,17 @@ a { text-decoration: none; color: inherit; }
 }
 
 .logo-img {
-    height: 40px;
+    height: 72px;
     width: auto;
     object-fit: contain;
 }
 
 .logo-img.logo-light {
-    height: 36px;
+    height: 60px;
 }
 
 .footer-brand .logo-img {
-    height: 44px;
+    height: 64px;
 }
 
 .nav-links {
