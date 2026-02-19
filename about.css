@@ -24,6 +24,14 @@
     pointer-events: none;
 }
 
+.about-hero-photo {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.08;
+}
+
 .about-hero-shape {
     position: absolute;
     border-radius: 50%;
@@ -322,6 +330,72 @@
     border-color: #0077B5;
     color: #fff;
     transform: scale(1.1);
+}
+
+/* ============================================
+   CTA SECTION — About Page
+   ============================================ */
+.cta-section {
+    padding: 100px 0;
+    background: linear-gradient(135deg, var(--color-navy), #0d2a4a);
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-section::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    right: -200px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(21, 129, 88, 0.15), transparent 60%);
+    pointer-events: none;
+}
+
+.cta-content {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.cta-content h2 {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+.cta-content > p {
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.7;
+    margin-bottom: 36px;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.cta-buttons .btn-outline {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.cta-buttons .btn-outline:hover {
+    border-color: #fff;
+    color: #fff;
+}
+
+.cta-note {
+    font-size: 0.85rem !important;
+    color: rgba(255, 255, 255, 0.4) !important;
+    margin-top: 20px !important;
 }
 
 /* ============================================
