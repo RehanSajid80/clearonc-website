@@ -14,7 +14,7 @@
 .about-hero {
     position: relative;
     padding: 160px 0 80px;
-    background: linear-gradient(180deg, #f0faf5 0%, #ffffff 100%);
+    background: linear-gradient(180deg, var(--color-light-blue-bg, #E8F6F8) 0%, #ffffff 100%);
     overflow: hidden;
 }
 
@@ -61,12 +61,13 @@
 }
 
 .about-hero h1 {
+    font-family: var(--font-heading);
     font-size: clamp(2.2rem, 5vw, 3.2rem);
-    font-weight: 800;
+    font-weight: 300;
     color: var(--color-navy);
     line-height: 1.15;
     margin-bottom: 24px;
-    letter-spacing: -0.02em;
+    letter-spacing: 0.01em;
 }
 
 .about-hero-lead {
@@ -111,8 +112,9 @@
 }
 
 .mission-content h2 {
+    font-family: var(--font-heading);
     font-size: 1.8rem;
-    font-weight: 700;
+    font-weight: 300;
     color: var(--color-navy);
     margin-bottom: 20px;
 }
@@ -143,7 +145,7 @@
 }
 
 .value-card:hover {
-    border-color: rgba(21, 129, 88, 0.2);
+    border-color: rgba(36, 200, 185, 0.2);
     box-shadow: var(--shadow-md);
     transform: translateY(-3px);
 }
@@ -154,7 +156,7 @@
     justify-content: center;
     width: 48px;
     height: 48px;
-    background: rgba(21, 129, 88, 0.08);
+    background: rgba(36, 200, 185, 0.1);
     border-radius: var(--radius-sm);
     color: var(--color-teal);
     margin-bottom: 14px;
@@ -223,7 +225,7 @@
 }
 
 .vision-card-accent .vision-label {
-    color: #2dd4a0;
+    color: #24C8B9;
 }
 
 .vision-card-accent p {
@@ -260,7 +262,7 @@
 }
 
 .team-card:hover {
-    border-color: rgba(21, 129, 88, 0.2);
+    border-color: rgba(36, 200, 185, 0.2);
     box-shadow: var(--shadow-lg);
     transform: translateY(-6px);
 }
@@ -275,7 +277,7 @@
     width: 88px;
     height: 88px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--color-navy), #1a3a5c);
+    background: linear-gradient(135deg, var(--color-navy), #4E5D88);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -291,7 +293,7 @@
     position: absolute;
     inset: -4px;
     border-radius: 50%;
-    border: 2px solid rgba(21, 129, 88, 0.2);
+    border: 2px solid rgba(36, 200, 185, 0.2);
 }
 
 .team-card:hover .team-avatar-placeholder::after {
@@ -337,7 +339,7 @@
    ============================================ */
 .cta-section {
     padding: 100px 0;
-    background: linear-gradient(135deg, var(--color-navy), #0d2a4a);
+    background: linear-gradient(135deg, var(--color-navy), #00232B);
     position: relative;
     overflow: hidden;
 }
@@ -349,7 +351,7 @@
     right: -200px;
     width: 500px;
     height: 500px;
-    background: radial-gradient(circle, rgba(21, 129, 88, 0.15), transparent 60%);
+    background: radial-gradient(circle, rgba(36, 200, 185, 0.15), transparent 60%);
     pointer-events: none;
 }
 
@@ -361,8 +363,9 @@
 }
 
 .cta-content h2 {
+    font-family: var(--font-heading);
     font-size: clamp(1.8rem, 4vw, 2.6rem);
-    font-weight: 800;
+    font-weight: 300;
     color: #fff;
     line-height: 1.2;
     margin-bottom: 20px;
