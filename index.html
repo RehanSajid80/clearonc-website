@@ -409,9 +409,8 @@
                 <div class="final-cta-form">
                     <div class="cta-form-card">
                         <h3>Request a Demo</h3>
-                        <form id="leadForm" class="lead-form" action="https://formsubmit.co/info@clearonc.com" method="POST">
+                        <form id="leadForm" class="lead-form" onsubmit="return submitToHubSpot(event)">
                             <input type="hidden" name="_subject" value="ClearOnc Demo Request">
-                            <input type="hidden" name="_captcha" value="false">
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="firstName">First Name *</label>
@@ -502,5 +501,68 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+    function submitToHubSpot(e) {
+        e.preventDefault();
+
+        var form = document.getElementById('leadForm');
+        var btn = form.querySelector('button[type="submit"]');
+        var origText = btn.innerHTML;
+        btn.innerHTML = 'Submitting...';
+        btn.disabled = true;
+
+        var firstName = form.querySelector('#firstName').value.trim();
+        var lastName = form.querySelector('#lastName').value.trim();
+        var email = form.querySelector('#email').value.trim();
+        var company = form.querySelector('#company').value.trim();
+        var role = form.querySelector('#role').value;
+        var employees = form.querySelector('#employees').value;
+
+        // 1. Identify contact via HubSpot tracking code (creates/updates contact in CRM)
+        var _hsq = window._hsq = window._hsq || [];
+        _hsq.push(['identify', {
+            email: email,
+            firstname: firstName,
+            lastname: lastName,
+            company: company,
+            jobtitle: role || ''
+        }]);
+        _hsq.push(['trackPageView']);
+
+        // 2. Also send via FormSubmit.co for email notification + as a reliable backup
+        var formData = new FormData();
+        formData.append('firstName', firstName);
+        formData.append('lastName', lastName);
+        formData.append('email', email);
+        formData.append('company', company);
+        formData.append('role', role || 'Not specified');
+        formData.append('employees', employees || 'Not specified');
+        formData.append('_subject', 'ClearOnc Demo Request - ' + firstName + ' ' + lastName + ' (' + company + ')');
+        formData.append('_captcha', 'false');
+        formData.append('_template', 'table');
+
+        fetch('https://formsubmit.co/ajax/info@clearonc.com', {
+            method: 'POST',
+            body: formData
+        })
+        .then(function() { showSuccess(); })
+        .catch(function() { showSuccess(); }) // Still show success — HubSpot tracking already captured the contact
+        .finally(function() {
+            btn.innerHTML = origText;
+            btn.disabled = false;
+        });
+
+        return false;
+    }
+
+    function showSuccess() {
+        var form = document.getElementById('leadForm');
+        form.innerHTML = '<div style="text-align:center;padding:40px 20px;">' +
+            '<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#24C8B9" stroke-width="2" style="margin-bottom:16px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>' +
+            '<h3 style="color:#20366A;font-size:24px;margin-bottom:8px;">Thank You!</h3>' +
+            '<p style="color:#5a6a7a;font-size:16px;">We\'ll be in touch within 24 hours.</p>' +
+            '</div>';
+    }
+    </script>
 </body>
 </html>
