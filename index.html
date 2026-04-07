@@ -583,54 +583,16 @@
                 <div class="final-cta-form">
                     <div class="cta-form-card">
                         <h3>Request a Demo</h3>
-                        <form id="leadForm" class="lead-form" onsubmit="return submitToHubSpot(event)">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="firstName">First Name *</label>
-                                    <input type="text" id="firstName" name="firstName" required placeholder="Jane">
-                                </div>
-                                <div class="form-group">
-                                    <label for="lastName">Last Name *</label>
-                                    <input type="text" id="lastName" name="lastName" required placeholder="Smith">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Work Email *</label>
-                                <input type="email" id="email" name="email" required placeholder="jane@company.com">
-                            </div>
-                            <div class="form-group">
-                                <label for="company">Company *</label>
-                                <input type="text" id="company" name="company" required placeholder="Your organization">
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="role">Role</label>
-                                    <select id="role" name="role">
-                                        <option value="">Select</option>
-                                        <option value="Benefits Leader">Benefits Leader</option>
-                                        <option value="HR Executive">HR Executive</option>
-                                        <option value="CFO / Finance">CFO / Finance</option>
-                                        <option value="Broker / Consultant">Broker / Consultant</option>
-                                        <option value="Health Plan">Health Plan</option>
-                                        <option value="Other">Other</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="employees">Covered Lives</label>
-                                    <select id="employees" name="employees">
-                                        <option value="">Select</option>
-                                        <option value="Under 5,000">Under 5,000</option>
-                                        <option value="5,000-25,000">5,000 &ndash; 25,000</option>
-                                        <option value="25,000-100,000">25,000 &ndash; 100,000</option>
-                                        <option value="100,000+">100,000+</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-lg btn-full">
-                                Request a Demo
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </button>
-                        </form>
+                        <div id="hubspotForm"></div>
+                        <script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/embed/v2.js"></script>
+                        <script>
+                        hbspt.forms.create({
+                            region: "na2",
+                            portalId: "244068766",
+                            formId: "dddb7aeb-04a4-46d5-9414-17c538d1fef3",
+                            target: "#hubspotForm"
+                        });
+                        </script>
                     </div>
                 </div>
             </div>
@@ -675,76 +637,7 @@
     </footer>
 
     <script src="script.js"></script>
-    <script>
-    function submitToHubSpot(e) {
-        e.preventDefault();
-
-        var form = document.getElementById('leadForm');
-        var btn = form.querySelector('button[type="submit"]');
-        var origText = btn.innerHTML;
-        btn.innerHTML = 'Submitting...';
-        btn.disabled = true;
-
-        var firstName = form.querySelector('#firstName').value.trim();
-        var lastName = form.querySelector('#lastName').value.trim();
-        var email = form.querySelector('#email').value.trim();
-        var company = form.querySelector('#company').value.trim();
-        var role = form.querySelector('#role').value;
-        var employees = form.querySelector('#employees').value;
-
-        // 1. Identify contact via HubSpot tracking code (creates/updates contact in CRM)
-        var _hsq = window._hsq = window._hsq || [];
-        _hsq.push(['identify', {
-            email: email,
-            firstname: firstName,
-            lastname: lastName,
-            company: company,
-            jobtitle: role || ''
-        }]);
-        _hsq.push(['trackPageView']);
-        _hsq.push(['trackEvent', {
-            id: 'Demo Request',
-            value: { email: email, company: company }
-        }]);
-
-        // 2. Submit to HubSpot Contacts API via proxy-free endpoint
-        fetch('https://api.hsforms.com/submissions/v3/integration/submit/244068766/clearonc-demo', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                fields: [
-                    { name: 'firstname', value: firstName },
-                    { name: 'lastname', value: lastName },
-                    { name: 'email', value: email },
-                    { name: 'company', value: company },
-                    { name: 'jobtitle', value: role || '' },
-                    { name: 'numemployees', value: employees || '' }
-                ],
-                context: {
-                    pageUri: window.location.href,
-                    pageName: document.title
-                }
-            })
-        })
-        .then(function() { showSuccess(); })
-        .catch(function() { showSuccess(); })
-        .finally(function() {
-            btn.innerHTML = origText;
-            btn.disabled = false;
-        });
-
-        return false;
-    }
-
-    function showSuccess() {
-        var form = document.getElementById('leadForm');
-        form.innerHTML = '<div style="text-align:center;padding:40px 20px;">' +
-            '<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#24C8B9" stroke-width="2" style="margin-bottom:16px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>' +
-            '<h3 style="color:#20366A;font-size:24px;margin-bottom:8px;">Thank You!</h3>' +
-            '<p style="color:#5a6a7a;font-size:16px;">We\'ll be in touch within 24 hours.</p>' +
-            '</div>';
-    }
-    </script>
+    <!-- HubSpot form handles submissions directly -->
     <script>
     // FAQ Accordion
     document.querySelectorAll('.faq-question').forEach(function(btn) {
