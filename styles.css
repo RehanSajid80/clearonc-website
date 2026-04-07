@@ -54,6 +54,15 @@
     --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* --- Hide HubSpot branding badge --- */
+#hs-eu-cookie-confirmation,
+.hs-cta-wrapper,
+#hubspot-messages-iframe-container,
+.sprocket-icon,
+#hs_show_banner_button {
+    display: none !important;
+}
+
 /* --- Reset & Base --- */
 *, *::before, *::after {
     margin: 0;
@@ -1318,6 +1327,47 @@ a { text-decoration: none; color: inherit; }
     display: block;
     font-size: 0.8rem;
     color: var(--color-text-light);
+}
+
+/* ============================================
+   Impact Stats (Evidence-Based Impact section)
+   ============================================ */
+.impact-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    max-width: 640px;
+    margin: 40px auto 0;
+}
+
+.impact-stat {
+    padding: 32px 28px;
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    text-align: center;
+    transition: all var(--transition);
+}
+
+.impact-stat:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-teal);
+}
+
+.impact-stat-number {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 800;
+    color: var(--color-teal);
+    line-height: 1;
+    margin-bottom: 12px;
+}
+
+.impact-stat-label {
+    font-size: 0.95rem;
+    color: var(--color-text-light);
+    line-height: 1.5;
 }
 
 /* ============================================
