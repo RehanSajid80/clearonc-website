@@ -54,13 +54,28 @@
     --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* --- Hide HubSpot branding badge --- */
+/* --- Hide HubSpot branding badge/sprocket --- */
 #hs-eu-cookie-confirmation,
 .hs-cta-wrapper,
 #hubspot-messages-iframe-container,
 .sprocket-icon,
-#hs_show_banner_button {
+#hs_show_banner_button,
+#hs-web-interactives-top-anchor,
+.hs-web-interactives-top-anchor,
+#LeadinModal-header_container,
+.leadinModal,
+#hubspot-conversations-inline-parent,
+#hubspot-conversations-inline-iframe,
+.widget-align-right,
+[data-test-id="chat-widget-wrapper"],
+#hs_chatflows_container {
     display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
 }
 
 /* --- Reset & Base --- */
@@ -652,14 +667,18 @@ a { text-decoration: none; color: inherit; }
 
 .risk-stat-label {
     font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.6);
-    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.5;
 }
 
 .risk-supporting {
     font-size: 1.05rem;
-    color: rgba(255, 255, 255, 0.5);
-    font-style: italic;
+    color: rgba(255, 255, 255, 0.85);
+    font-style: normal;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
 }
 
 /* ============================================
