@@ -211,17 +211,17 @@
                 <div class="built-for-card" style="text-align: left; padding: 36px;">
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
                     <h3>Episodic</h3>
-                    <p style="font-size: 0.95rem; color: var(--color-text-light); line-height: 1.6; margin-top: 8px;">Answering one question once</p>
+                    <p style="font-size: 0.95rem; color: var(--color-text-light); line-height: 1.6; margin-top: 8px;">A single consult that answers one question, once &mdash; with no follow-up as the journey evolves</p>
                 </div>
                 <div class="built-for-card" style="text-align: left; padding: 36px;">
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
                     <h3>Manual</h3>
-                    <p style="font-size: 0.95rem; color: var(--color-text-light); line-height: 1.6; margin-top: 8px;">Dependent on record chasing and administrative friction</p>
+                    <p style="font-size: 0.95rem; color: var(--color-text-light); line-height: 1.6; margin-top: 8px;">Dependent on weeks of record chasing, faxes, and administrative friction</p>
                 </div>
                 <div class="built-for-card" style="text-align: left; padding: 36px;">
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                     <h3>Slow</h3>
-                    <p style="font-size: 0.95rem; color: var(--color-text-light); line-height: 1.6; margin-top: 8px;">Often requiring 4 to 6 weeks or longer</p>
+                    <p style="font-size: 0.95rem; color: var(--color-text-light); line-height: 1.6; margin-top: 8px;">Results often take 4 to 6 weeks &mdash; by then, treatment is already underway</p>
                 </div>
             </div>
             <p class="differentiator-note fade-up" style="margin-top: 32px;">
@@ -564,56 +564,16 @@
                 <div class="final-cta-form">
                     <div class="cta-form-card">
                         <h3>Request a Demo</h3>
-                        <form id="leadForm" class="lead-form" action="https://formsubmit.co/info@clearonc.com" method="POST">
-                            <input type="hidden" name="_subject" value="ClearOnc Demo Request">
-                            <input type="hidden" name="_captcha" value="false">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="firstName">First Name *</label>
-                                    <input type="text" id="firstName" name="firstName" required placeholder="Jane">
-                                </div>
-                                <div class="form-group">
-                                    <label for="lastName">Last Name *</label>
-                                    <input type="text" id="lastName" name="lastName" required placeholder="Smith">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Work Email *</label>
-                                <input type="email" id="email" name="email" required placeholder="jane@company.com">
-                            </div>
-                            <div class="form-group">
-                                <label for="company">Company *</label>
-                                <input type="text" id="company" name="company" required placeholder="Your organization">
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="role">Role</label>
-                                    <select id="role" name="role">
-                                        <option value="">Select</option>
-                                        <option value="Benefits Leader">Benefits Leader</option>
-                                        <option value="HR Executive">HR Executive</option>
-                                        <option value="CFO / Finance">CFO / Finance</option>
-                                        <option value="Broker / Consultant">Broker / Consultant</option>
-                                        <option value="Health Plan">Health Plan</option>
-                                        <option value="Other">Other</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="employees">Covered Lives</label>
-                                    <select id="employees" name="employees">
-                                        <option value="">Select</option>
-                                        <option value="Under 5,000">Under 5,000</option>
-                                        <option value="5,000-25,000">5,000 &ndash; 25,000</option>
-                                        <option value="25,000-100,000">25,000 &ndash; 100,000</option>
-                                        <option value="100,000+">100,000+</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-lg btn-full">
-                                Request a Demo
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </button>
-                        </form>
+                        <div id="hubspotForm"></div>
+                        <script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/embed/v2.js"></script>
+                        <script>
+                        hbspt.forms.create({
+                            region: "na2",
+                            portalId: "244068766",
+                            formId: "dddb7aeb-04a4-46d5-9414-17c538d1fef3",
+                            target: "#hubspotForm"
+                        });
+                        </script>
                     </div>
                 </div>
             </div>
