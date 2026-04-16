@@ -1,0 +1,12 @@
+{
+  "activeViewId" : "6c0a2a4f-7cd6-4599-b34b-e330884c319c",
+  "appPageId" : "92f3824a-4c4a-462f-b1dd-367efc2be930",
+  "configurationTags" : [ ],
+  "devName" : "Support_Case_List_View__c",
+  "id" : "324a0779-dcaf-47f5-82a0-a5ab8b3e694d",
+  "label" : "Support Case List View",
+  "pageAccess" : "UseParent",
+  "routeType" : "custom-support-case-list-view",
+  "type" : "route",
+  "urlPrefix" : "support-case-list-view"
+}

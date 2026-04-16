@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClearOnc Insights — 1 Minute Video</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #20366A;
+            --midnight: #00232B;
+            --orange: #FF7900;
+            --teal: #24C8B9;
+            --light-blue: #A2DCE9;
+            --sand: #E6E5D3;
+            --white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { background: #000; overflow: hidden; width: 100vw; height: 100vh; }
+
+        body {
+            width: 1920px;
+            height: 1080px;
+            overflow: hidden;
+            font-family: 'Outfit', sans-serif;
+            background: #000;
+            color: var(--white);
+            -webkit-font-smoothing: antialiased;
+            transform-origin: top left;
+            position: relative;
+        }
+
+        /* ===== FILM TREATMENT ===== */
+        .film-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 1920px; height: 1080px;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        .letterbox { position: absolute; left: 0; width: 100%; background: #000; z-index: 5; }
+        .letterbox-t { top: 0; height: 54px; }
+        .letterbox-b { bottom: 0; height: 54px; }
+
+        .vignette {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.55) 100%);
+            z-index: 4;
+        }
+
+        .grain-canvas {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0.035; z-index: 3; mix-blend-mode: overlay;
+        }
+
+        /* ===== TRANSITION FLASH ===== */
+        .flash-overlay {
+            position: fixed; top: 0; left: 0;
+            width: 1920px; height: 1080px;
+            background: white;
+            opacity: 0;
+            z-index: 90;
+            pointer-events: none;
+            mix-blend-mode: soft-light;
+        }
+
+        /* ===== SCENE CONTAINER ===== */
+        .scene-container {
+            position: absolute;
+            top: 0; left: 0;
+            width: 1920px; height: 1080px;
+            z-index: 10;
+        }
+
+        .scene {
+            position: absolute;
+            top: 0; left: 0;
+            width: 1920px; height: 1080px;
+            opacity: 0;
+            visibility: hidden;
+            will-change: transform, opacity, filter;
+        }
+
+        .scene.active { opacity: 1; visibility: visible; }
+
+        /* ===== BACKGROUNDS ===== */
+        .bg-img {
+            position: absolute;
+            top: -8%; left: -8%;
+            width: 116%; height: 116%;
+            background-size: cover;
+            background-position: center;
+            will-change: transform;
+        }
+
+        .overlay-grad {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        }
+
+        /* ===== TEXT SYSTEM ===== */
+        .txt {
+            position: absolute;
+            z-index: 20;
+        }
+
+        .line-wrap {
+            overflow: hidden;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .line-inner {
+            display: block;
+            transform: translateY(110%);
+            will-change: transform;
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            color: rgba(255,255,255,0.96);
+            line-height: 1.65;
+            letter-spacing: 0.3px;
+        }
+
+        .line-inner.revealed {
+            transform: translateY(0);
+            transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .line-inner.exit {
+            transform: translateY(-110%);
+            transition: transform 0.5s cubic-bezier(0.7, 0, 0.84, 0);
+        }
+
+        .line-inner em {
+            font-style: normal;
+            color: var(--teal);
+        }
+
+        .txt-shadow .line-inner {
+            text-shadow: 0 3px 30px rgba(0,0,0,0.7), 0 0 80px rgba(0,0,0,0.3);
+        }
+
+        .fs-28 .line-inner { font-size: 28px; }
+        .fs-32 .line-inner { font-size: 32px; }
+        .fs-36 .line-inner { font-size: 36px; }
+        .fs-38 .line-inner { font-size: 38px; }
+        .fs-42 .line-inner { font-size: 42px; }
+        .fs-48 .line-inner { font-size: 48px; }
+        .fs-52 .line-inner { font-size: 52px; }
+
+        /* ===== INTRO ===== */
+        .intro-fill {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--navy);
+        }
+
+        .intro-orb {
+            position: absolute;
+            border-radius: 50%;
+            will-change: transform, opacity;
+            opacity: 0;
+        }
+
+        .orb-a {
+            width: 1000px; height: 1000px;
+            top: -350px; right: -250px;
+            background: radial-gradient(circle, rgba(36,200,185,0.14) 0%, transparent 60%);
+        }
+
+        .orb-b {
+            width: 800px; height: 800px;
+            bottom: -350px; left: -250px;
+            background: radial-gradient(circle, rgba(255,121,0,0.07) 0%, transparent 60%);
+        }
+
+        .intro-center {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+        }
+
+        .intro-mark {
+            height: 130px;
+            filter: brightness(0) invert(1);
+            opacity: 0;
+            transform: scale(0.5) rotate(-8deg);
+            will-change: transform, opacity;
+        }
+
+        .intro-wordmark {
+            height: 50px;
+            opacity: 0;
+            transform: translateY(10px);
+            will-change: transform, opacity;
+            margin-top: 16px;
+        }
+
+        .intro-rule {
+            width: 0;
+            height: 2px;
+            background: var(--teal);
+            margin-top: 30px;
+            will-change: width;
+        }
+
+        .intro-tagline {
+            margin-top: 36px;
+            text-align: center;
+        }
+
+        .intro-tagline .line-inner {
+            font-family: 'Outfit', sans-serif;
+            font-size: 52px;
+            font-weight: 300;
+            letter-spacing: -0.5px;
+            color: var(--white);
+        }
+
+        .intro-tagline .teal { color: var(--teal); }
+
+        .intro-badge {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0);
+            will-change: color;
+        }
+
+        /* ===== DATA SCENE BG ===== */
+        .data-fill {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, #0d1f42 0%, var(--navy) 40%, #0a1628 100%);
+        }
+
+        /* ===== STAT COUNTERS ===== */
+        .stat-row {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            gap: 80px;
+            z-index: 20;
+            opacity: 0;
+            will-change: opacity;
+        }
+
+        .stat-card {
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            will-change: transform, opacity;
+        }
+
+        .stat-card.show {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .stat-num {
+            font-family: 'Outfit', sans-serif;
+            font-size: 72px;
+            font-weight: 700;
+            color: var(--teal);
+            line-height: 1;
+            letter-spacing: -2px;
+        }
+
+        .stat-suffix {
+            font-size: 48px;
+            font-weight: 400;
+            color: var(--teal);
+            opacity: 0.8;
+        }
+
+        .stat-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            color: rgba(255,255,255,0.55);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-top: 12px;
+            max-width: 200px;
+        }
+
+        .stat-divider {
+            width: 1px;
+            height: 80px;
+            background: rgba(255,255,255,0.08);
+            align-self: center;
+        }
+
+        /* ===== STEPS ===== */
+        .steps-container {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            gap: 60px;
+            z-index: 20;
+        }
+
+        .step-item {
+            text-align: center;
+            width: 280px;
+            opacity: 0;
+            transform: translateY(40px);
+            will-change: transform, opacity;
+        }
+
+        .step-item.show {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .step-num {
+            width: 56px; height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--teal), var(--light-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--navy);
+        }
+
+        .step-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 10px;
+        }
+
+        .step-desc {
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 300;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.6;
+        }
+
+        .step-connector {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--teal), rgba(36,200,185,0.2));
+            align-self: center;
+            opacity: 0;
+            transform: scaleX(0);
+            transform-origin: left;
+            will-change: transform, opacity;
+        }
+
+        .step-connector.show {
+            opacity: 1;
+            transform: scaleX(1);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* ===== JOURNEY TIMELINE ===== */
+        .journey-wrap {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 1200px;
+            z-index: 20;
+        }
+
+        .journey-line-track {
+            position: relative;
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 2px;
+            margin-top: 60px;
+        }
+
+        .journey-line-fill {
+            position: absolute;
+            top: 0; left: 0;
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--teal), var(--orange));
+            border-radius: 2px;
+            will-change: width;
+        }
+
+        .journey-node {
+            position: absolute;
+            top: -8px;
+            width: 20px; height: 20px;
+            border-radius: 50%;
+            background: var(--navy);
+            border: 3px solid rgba(255,255,255,0.15);
+            transform: scale(0);
+            will-change: transform;
+            z-index: 2;
+        }
+
+        .journey-node.active {
+            border-color: var(--teal);
+            background: var(--teal);
+            transform: scale(1);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 0 20px rgba(36,200,185,0.4);
+        }
+
+        .journey-node-label {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            color: rgba(255,255,255,0.5);
+            white-space: nowrap;
+            opacity: 0;
+            will-change: opacity;
+            letter-spacing: 0.5px;
+        }
+
+        .journey-node.active .journey-node-label {
+            opacity: 1;
+            color: var(--white);
+            transition: opacity 0.5s ease 0.2s;
+        }
+
+        .journey-title {
+            text-align: center;
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--teal);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            opacity: 0;
+            will-change: opacity;
+        }
+
+        .journey-headline {
+            text-align: center;
+            font-family: 'Outfit', sans-serif;
+            font-size: 38px;
+            font-weight: 300;
+            color: var(--white);
+            margin-top: 12px;
+            opacity: 0;
+            transform: translateY(15px);
+            will-change: opacity, transform;
+        }
+
+        .journey-headline span { color: var(--teal); }
+
+        /* ===== MOFFITT BADGE ===== */
+        .moffitt-strip {
+            position: absolute;
+            bottom: 110px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 14px 32px;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(16px);
+            border-radius: 50px;
+            border: 1px solid rgba(36,200,185,0.15);
+            opacity: 0;
+            will-change: opacity;
+        }
+
+        .moffitt-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--teal);
+            box-shadow: 0 0 8px rgba(36,200,185,0.5);
+        }
+
+        .moffitt-text {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            color: rgba(255,255,255,0.7);
+            letter-spacing: 1px;
+        }
+
+        .moffitt-text strong {
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        /* ===== OUTRO ===== */
+        .outro-fill {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--navy);
+        }
+
+        .outro-center {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+        }
+
+        .outro-logo {
+            height: 50px;
+            opacity: 0;
+            will-change: opacity, transform;
+        }
+
+        .outro-rule {
+            width: 0;
+            height: 2px;
+            background: var(--teal);
+            margin-top: 26px;
+            will-change: width;
+        }
+
+        .outro-tagline {
+            margin-top: 28px;
+            text-align: center;
+            font-family: 'Outfit', sans-serif;
+            font-size: 42px;
+            font-weight: 300;
+            color: rgba(255,255,255,0.95);
+            line-height: 1.45;
+            opacity: 0;
+            transform: translateY(14px);
+            will-change: transform, opacity;
+        }
+
+        .outro-tagline span { color: var(--teal); }
+
+        .outro-url {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0);
+            margin-top: 36px;
+            will-change: color;
+        }
+
+        .outro-cta {
+            margin-top: 24px;
+            padding: 14px 44px;
+            border-radius: 50px;
+            background: var(--orange);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0);
+            will-change: color, transform;
+            transform: translateY(10px);
+        }
+
+        .outro-mission {
+            margin-top: 20px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            color: rgba(255,255,255,0);
+            will-change: color;
+            text-align: center;
+            max-width: 500px;
+            line-height: 1.5;
+        }
+
+        /* ===== LOWER THIRD ===== */
+        .lower-third {
+            position: fixed;
+            bottom: 80px; left: 0;
+            z-index: 80;
+            display: flex;
+            align-items: stretch;
+            transform: translateX(-100%);
+            will-change: transform;
+            transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .lower-third.show { transform: translateX(0); }
+        .lower-third.hide { transform: translateX(-100%); transition-timing-function: cubic-bezier(0.7, 0, 0.84, 0); transition-duration: 0.5s; }
+
+        .lt-accent {
+            width: 4px;
+            background: var(--teal);
+        }
+
+        .lt-body {
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(16px);
+            padding: 12px 28px 12px 20px;
+        }
+
+        .lt-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: 2px;
+        }
+
+        .lt-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            color: rgba(255,255,255,0.85);
+            letter-spacing: 0.5px;
+        }
+
+        /* ===== WATERMARK ===== */
+        .wm {
+            position: fixed;
+            top: 72px; left: 50px;
+            z-index: 80;
+            height: 22px;
+            opacity: 0;
+            will-change: opacity;
+            pointer-events: none;
+        }
+
+        /* ===== PROGRESS ===== */
+        .progress-track {
+            position: fixed;
+            bottom: 54px; left: 0;
+            width: 1920px; height: 3px;
+            background: rgba(255,255,255,0.06);
+            z-index: 110;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--teal), var(--light-blue));
+            will-change: width;
+        }
+
+        .tc {
+            position: fixed;
+            top: 72px; right: 50px;
+            font-family: 'Inter', monospace;
+            font-size: 11px;
+            color: rgba(255,255,255,0.12);
+            z-index: 110;
+            pointer-events: none;
+        }
+
+        /* ===== CONTROLS ===== */
+        .ctrl {
+            position: fixed;
+            bottom: 72px; right: 50px;
+            z-index: 120;
+            display: flex;
+            gap: 6px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        body:hover .ctrl { opacity: 0.6; }
+
+        .ctrl button {
+            background: rgba(0,0,0,0.55);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: rgba(255,255,255,0.7);
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            transition: background 0.2s;
+        }
+
+        .ctrl button:hover { background: rgba(0,0,0,0.8); }
+
+        /* ===== MOTION CANVAS ===== */
+        #mCanvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 1920px; height: 1080px;
+            z-index: 50;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Film overlays -->
+<div class="film-overlay">
+    <div class="letterbox letterbox-t"></div>
+    <div class="letterbox letterbox-b"></div>
+    <div class="vignette"></div>
+    <canvas class="grain-canvas" id="grainCanvas" width="512" height="512"></canvas>
+</div>
+
+<!-- Transition flash -->
+<div class="flash-overlay" id="flash"></div>
+
+<!-- Motion graphics canvas -->
+<canvas id="mCanvas" width="1920" height="1080"></canvas>
+
+<!-- Watermark -->
+<img src="https://rehansajid80.github.io/clearonc-website/Logo%20-%20white.png" alt="" class="wm" id="wm">
+
+<!-- Lower third -->
+<div class="lower-third" id="lt">
+    <div class="lt-accent"></div>
+    <div class="lt-body">
+        <div class="lt-label" id="ltLabel">Scene</div>
+        <div class="lt-title" id="ltTitle">Title</div>
+    </div>
+</div>
+
+<!-- Progress -->
+<div class="progress-track"><div class="progress-fill" id="pFill"></div></div>
+<div class="tc" id="tc">00:00 / 01:07</div>
+
+<!-- Controls -->
+<div class="ctrl">
+    <button onclick="togglePlay()" id="pBtn" title="Play/Pause">&#10074;&#10074;</button>
+    <button onclick="prev()" title="Previous">&#9664;</button>
+    <button onclick="next()" title="Next">&#9654;</button>
+    <button onclick="restart()" title="Restart">&#8635;</button>
+</div>
+
+<!-- ============ SCENES ============ -->
+<div class="scene-container">
+
+    <!-- S0: INTRO — Logo Reveal (0:00 – 0:04.5) -->
+    <div class="scene" id="s0" data-dur="4500">
+        <div class="intro-fill"></div>
+        <div class="intro-orb orb-a" id="orbA"></div>
+        <div class="intro-orb orb-b" id="orbB"></div>
+        <div class="intro-center">
+            <img src="https://rehansajid80.github.io/clearonc-website/Logo%20-%20symbol.png" alt="" class="intro-mark" id="iMark">
+            <img src="https://rehansajid80.github.io/clearonc-website/Logo%20-%20white.png" alt="ClearOnc" class="intro-wordmark" id="iWord">
+            <div class="intro-rule" id="iRule"></div>
+            <div class="intro-tagline fs-52">
+                <span class="line-wrap"><span class="line-inner">The right expertise. Anywhere.</span></span>
+                <span class="line-wrap"><span class="line-inner teal">Without the wait.</span></span>
+            </div>
+            <div class="intro-badge" id="iBadge">Expert Oncology Intelligence</div>
+        </div>
+    </div>
+
+    <!-- S1: THE PROBLEM — Emotional (0:08 – 0:15) -->
+    <div class="scene" id="s1" data-dur="7000">
+        <div class="bg-img" id="bg1" style="background-image:url('https://rehansajid80.github.io/clearonc-website/images/compassionate-care.jpg'); background-position:center 30%;"></div>
+        <div class="overlay-grad" style="background:linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.05) 30%, rgba(0,0,0,0.75) 100%);"></div>
+        <div class="txt txt-shadow fs-36" style="bottom:130px; left:130px; max-width:900px;">
+            <span class="line-wrap"><span class="line-inner">When someone hears <em>&ldquo;you have cancer,&rdquo;</em></span></span>
+            <span class="line-wrap"><span class="line-inner">every decision suddenly matters &mdash;</span></span>
+            <span class="line-wrap"><span class="line-inner">and expert guidance often arrives <em>weeks too late.</em></span></span>
+        </div>
+    </div>
+
+    <!-- S2: THE GAP — Stats (0:15 – 0:21.5) -->
+    <div class="scene" id="s2" data-dur="6500">
+        <div class="data-fill"></div>
+        <div class="txt fs-42" style="top:180px; left:50%; transform:translateX(-50%); text-align:center; width:100%;">
+            <span class="line-wrap" style="justify-content:center; display:flex;"><span class="line-inner">Only <em>20%</em> of patients reach an NCI center.</span></span>
+            <span class="line-wrap" style="justify-content:center; display:flex;"><span class="line-inner">The rest navigate alone.</span></span>
+        </div>
+        <!-- Animated stat counters -->
+        <div class="stat-row" id="statRow1">
+            <div class="stat-card" id="sc1">
+                <div class="stat-num"><span class="counter" data-target="80" data-suffix="%">0</span><span class="stat-suffix">%</span></div>
+                <div class="stat-label">lack NCI-level guidance</div>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-card" id="sc2">
+                <div class="stat-num"><span class="counter" data-target="4" data-suffix="-6">0</span>-6<span class="stat-suffix"> wks</span></div>
+                <div class="stat-label">traditional wait time</div>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-card" id="sc3">
+                <div class="stat-num">$<span class="counter" data-target="65" data-suffix="M">0</span><span class="stat-suffix">M</span></div>
+                <div class="stat-label">avoidable cost per 100K lives</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- S3: THE SOLUTION — ClearOnc Intro (0:21.5 – 0:28) -->
+    <div class="scene" id="s3" data-dur="6500">
+        <div class="bg-img" id="bg3" style="background-image:url('https://rehansajid80.github.io/clearonc-website/images/telehealth-consult.jpg'); background-position: center;"></div>
+        <div class="overlay-grad" style="background:linear-gradient(135deg, rgba(32,54,106,0.88) 0%, rgba(0,35,43,0.82) 100%);"></div>
+        <div class="txt txt-shadow fs-38" style="top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; width:100%;">
+            <span class="line-wrap" style="justify-content:center; display:flex;"><span class="line-inner">ClearOnc Insights brings</span></span>
+            <span class="line-wrap" style="justify-content:center; display:flex;"><span class="line-inner"><em>Moffitt Cancer Center expertise</em></span></span>
+            <span class="line-wrap" style="justify-content:center; display:flex;"><span class="line-inner">into those moments &mdash;</span></span>
+            <span class="line-wrap" style="justify-content:center; display:flex;"><span class="line-inner">in days, not weeks.</span></span>
+        </div>
+        <div class="moffitt-strip" id="moffittBadge">
+            <div class="moffitt-dot"></div>
+            <div class="moffitt-text">Powered by <strong>Moffitt Cancer Center</strong> &bull; NCI-Designated &bull; 50+ cancer subspecialties</div>
+        </div>
+    </div>
+
+    <!-- S4: HOW IT WORKS — 3 Steps (0:28 – 0:36) -->
+    <div class="scene" id="s4" data-dur="8000">
+        <div class="data-fill" style="background:linear-gradient(135deg, #0a1628 0%, #152952 50%, #0d1f42 100%);"></div>
+        <div class="txt fs-28" style="top:160px; left:50%; transform:translateX(-50%); text-align:center; width:100%;">
+            <span class="line-wrap" style="justify-content:center; display:flex;"><span class="line-inner" style="font-family:'Outfit',sans-serif;font-size:16px;font-weight:500;color:var(--teal);letter-spacing:4px;text-transform:uppercase;">How It Works</span></span>
+        </div>
+        <div class="steps-container" id="stepsRow">
+            <div class="step-item" id="step1">
+                <div class="step-num">1</div>
+                <div class="step-title">Automated Intake</div>
+                <div class="step-desc">Records collected and synthesized in hours using intelligent automation</div>
+            </div>
+            <div class="step-connector" id="conn1"></div>
+            <div class="step-item" id="step2">
+                <div class="step-num">2</div>
+                <div class="step-title">Subspecialty Match</div>
+                <div class="step-desc">Each case matched to the right Moffitt expert by cancer type</div>
+            </div>
+            <div class="step-connector" id="conn2"></div>
+            <div class="step-item" id="step3">
+                <div class="step-num">3</div>
+                <div class="step-title">Expert Guidance</div>
+                <div class="step-desc">Actionable recommendations signed by oncologists in 4&ndash;6 days</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- S5: IMPACT — Results (0:36 – 0:42.5) -->
+    <div class="scene" id="s5" data-dur="6500">
+        <div class="bg-img" id="bg5" style="background-image:url('https://rehansajid80.github.io/clearonc-website/images/doctor-confident.jpg');"></div>
+        <div class="overlay-grad" style="background:rgba(0,12,35,0.82);"></div>
+        <div class="txt fs-28" style="top:180px; left:50%; transform:translateX(-50%); text-align:center; width:100%;">
+            <span class="line-wrap" style="justify-content:center; display:flex;"><span class="line-inner" style="font-family:'Outfit',sans-serif;font-size:16px;font-weight:500;color:var(--teal);letter-spacing:4px;text-transform:uppercase;">Proven Impact</span></span>
+        </div>
+        <div class="stat-row" id="statRow2">
+            <div class="stat-card" id="sc4">
+                <div class="stat-num"><span class="counter" data-target="20">0</span>&ndash;40<span class="stat-suffix">%</span></div>
+                <div class="stat-label">treatment changes</div>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-card" id="sc5">
+                <div class="stat-num"><span class="counter" data-target="4">0</span>&ndash;6<span class="stat-suffix"> days</span></div>
+                <div class="stat-label">to expert review</div>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-card" id="sc6">
+                <div class="stat-num"><span class="counter" data-target="100">0</span><span class="stat-suffix">%</span></div>
+                <div class="stat-label">physician-led reviews</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- S6: CARE COMPANION — Journey (0:42.5 – 0:49.5) -->
+    <div class="scene" id="s6" data-dur="7000">
+        <div class="data-fill" style="background:linear-gradient(135deg, #0d1f42 0%, #1a3360 50%, #0a1628 100%);"></div>
+        <div class="journey-wrap" id="journeyWrap">
+            <div class="journey-title" id="jTitle">The Care Companion</div>
+            <div class="journey-headline" id="jHeadline">Not a one-time opinion. A <span>continuous partner.</span></div>
+            <div class="journey-line-track">
+                <div class="journey-line-fill" id="jFill"></div>
+                <div class="journey-node" id="jn0" style="left:5%;"><div class="journey-node-label">Diagnosis</div></div>
+                <div class="journey-node" id="jn1" style="left:30%;"><div class="journey-node-label">Treatment Planning</div></div>
+                <div class="journey-node" id="jn2" style="left:60%;"><div class="journey-node-label">Course Correction</div></div>
+                <div class="journey-node" id="jn3" style="left:90%;"><div class="journey-node-label">Survivorship</div></div>
+            </div>
+        </div>
+        <div class="txt txt-shadow fs-32" style="bottom:130px; left:50%; transform:translateX(-50%); text-align:center; width:100%;">
+            <span class="line-wrap" style="justify-content:center; display:flex;"><span class="line-inner">Cancer is not a single event &mdash; it&rsquo;s a series of <em>inflection points.</em></span></span>
+        </div>
+    </div>
+
+    <!-- S7: EMOTIONAL CLOSE (0:49.5 – 0:54.5) -->
+    <div class="scene" id="s7" data-dur="5000">
+        <div class="bg-img" id="bg7" style="background-image:url('https://rehansajid80.github.io/clearonc-website/images/survivorship-outdoors.jpg'); background-position:center;"></div>
+        <div class="overlay-grad" style="background:linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.05) 30%, rgba(0,0,0,0.7) 100%);"></div>
+        <div class="txt txt-shadow fs-36" style="bottom:130px; left:130px; max-width:900px;">
+            <span class="line-wrap"><span class="line-inner"><em>&ldquo;Confidence in a patient&rsquo;s treatment</em></span></span>
+            <span class="line-wrap"><span class="line-inner"><em>should not take weeks</em></span></span>
+            <span class="line-wrap"><span class="line-inner">or be dependent on where you live.&rdquo;</span></span>
+        </div>
+    </div>
+
+    <!-- S8: OUTRO (0:54.5 – 1:00.5) -->
+    <div class="scene" id="s8" data-dur="6000">
+        <div class="outro-fill"></div>
+        <div class="intro-orb orb-a" id="orbC"></div>
+        <div class="intro-orb orb-b" id="orbD"></div>
+        <div class="outro-center">
+            <img src="https://rehansajid80.github.io/clearonc-website/Logo%20-%20white.png" alt="ClearOnc" class="outro-logo" id="oLogo">
+            <div class="outro-rule" id="oRule"></div>
+            <div class="outro-tagline" id="oTag">Expert cancer care. Anywhere.<br><span>Without the wait.</span></div>
+            <div class="outro-cta" id="oCta">Request a Demo</div>
+            <div class="outro-url" id="oUrl">clearonc.com</div>
+            <div class="outro-mission" id="oMission">An AccelerOnc Studio company, powered by Moffitt Cancer Center</div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+// ========================================
+// CINEMATIC VIDEO ENGINE v2
+// ========================================
+
+const BASE = 'https://rehansajid80.github.io/clearonc-website/';
+
+// ===== ELEMENTS =====
+const scenes = document.querySelectorAll('.scene');
+const flash = document.getElementById('flash');
+const pFill = document.getElementById('pFill');
+const tcEl = document.getElementById('tc');
+const wm = document.getElementById('wm');
+const lt = document.getElementById('lt');
+const ltLabel = document.getElementById('ltLabel');
+const ltTitle = document.getElementById('ltTitle');
+const mCanvas = document.getElementById('mCanvas');
+const mCtx = mCanvas.getContext('2d');
+const grainCanvas = document.getElementById('grainCanvas');
+const grainCtx = grainCanvas.getContext('2d');
+
+// ===== TIMELINE =====
+const tl = [];
+let totalDur = 0;
+scenes.forEach((s, i) => {
+    const d = parseInt(s.dataset.dur) || 8000;
+    tl.push({ el: s, start: totalDur, dur: d, idx: i });
+    totalDur += d;
+});
+
+let playing = true;
+let t0 = performance.now();
+let tOffset = 0;
+let curIdx = -1;
+let ltTimeout = null;
+
+// Scene metadata
+const meta = [
+    { label: null, lt: null },
+    { label: 'Scene 01', lt: 'The Challenge' },
+    { label: 'Scene 02', lt: 'The Gap in Oncology' },
+    { label: 'Scene 03', lt: 'ClearOnc Insights' },
+    { label: 'Scene 04', lt: 'How It Works' },
+    { label: 'Scene 05', lt: 'Proven Impact' },
+    { label: 'Scene 06', lt: 'The Care Companion' },
+    { label: 'Scene 07', lt: 'Our Promise' },
+    { label: null, lt: null },
+];
+
+// ===== FILM GRAIN =====
+function renderGrain() {
+    const w = 512, h = 512;
+    const imgData = grainCtx.createImageData(w, h);
+    const d = imgData.data;
+    for (let i = 0; i < d.length; i += 4) {
+        const v = Math.random() * 255;
+        d[i] = d[i+1] = d[i+2] = v;
+        d[i+3] = 255;
+    }
+    grainCtx.putImageData(imgData, 0, 0);
+}
+
+let grainFrame = 0;
+function updateGrain() {
+    grainFrame++;
+    if (grainFrame % 3 === 0) renderGrain();
+}
+
+// ===== PARTICLE SYSTEM =====
+class Mote {
+    constructor() { this.init(); }
+    init() {
+        this.x = Math.random() * 1920;
+        this.y = Math.random() * 1080;
+        this.vx = (Math.random() - 0.5) * 0.3;
+        this.vy = (Math.random() - 0.5) * 0.25;
+        this.r = Math.random() * 1.5 + 0.5;
+        this.maxA = Math.random() * 0.12 + 0.02;
+        this.life = Math.random() * 10000 + 5000;
+        this.born = -1;
+    }
+    update(now, dt) {
+        if (this.born < 0) this.born = now;
+        this.x += this.vx * dt * 0.06;
+        this.y += this.vy * dt * 0.06;
+        const age = now - this.born;
+        if (age > this.life || this.x < -50 || this.x > 1970 || this.y < -50 || this.y > 1130) {
+            this.init(); this.born = now;
+        }
+        const fadeIn = Math.min(age / 1500, 1);
+        const fadeOut = Math.max((this.life - age) / 1500, 0);
+        return this.maxA * Math.min(fadeIn, fadeOut);
+    }
+}
+
+const motes = Array.from({ length: 60 }, () => new Mote());
+
+class Stream {
+    constructor() { this.init(); }
+    init() {
+        this.y = Math.random() * 1080;
+        this.x = -Math.random() * 600 - 200;
+        this.w = Math.random() * 350 + 150;
+        this.speed = Math.random() * 1.8 + 0.8;
+        this.a = Math.random() * 0.1 + 0.02;
+    }
+    update(dt) {
+        this.x += this.speed * dt * 0.06;
+        if (this.x > 2100) this.init();
+    }
+}
+
+const streams = Array.from({ length: 12 }, () => new Stream());
+
+let prevNow = performance.now();
+
+function drawCanvas(gTime, sIdx, sProg) {
+    const now = performance.now();
+    const dt = Math.min(now - prevNow, 50);
+    prevNow = now;
+
+    mCtx.clearRect(0, 0, 1920, 1080);
+
+    const isData = sIdx === 2 || sIdx === 4 || sIdx === 5 || sIdx === 6;
+
+    // Motes
+    motes.forEach(m => {
+        const a = m.update(gTime, dt);
+        if (a > 0.003) {
+            mCtx.beginPath();
+            mCtx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
+            mCtx.fillStyle = isData
+                ? `rgba(36,200,185,${a * 2.5})`
+                : `rgba(255,255,255,${a})`;
+            mCtx.fill();
+        }
+    });
+
+    if (isData) {
+        streams.forEach(s => {
+            s.update(dt);
+            const g = mCtx.createLinearGradient(s.x, 0, s.x + s.w, 0);
+            g.addColorStop(0, 'rgba(36,200,185,0)');
+            g.addColorStop(0.3, `rgba(36,200,185,${s.a})`);
+            g.addColorStop(0.7, `rgba(36,200,185,${s.a})`);
+            g.addColorStop(1, 'rgba(36,200,185,0)');
+            mCtx.fillStyle = g;
+            mCtx.fillRect(s.x, s.y, s.w, 1);
+        });
+
+        const pulse = (Math.sin(gTime * 0.0008) + 1) * 0.5;
+        for (let x = 60; x < 1920; x += 80) {
+            for (let y = 60; y < 1080; y += 80) {
+                const hash = (x * 31 + y * 17) % 100;
+                if (hash < 8) {
+                    const a = 0.02 + pulse * 0.03 + Math.sin(gTime * 0.001 + hash) * 0.02;
+                    mCtx.beginPath();
+                    mCtx.arc(x, y, 1.2, 0, Math.PI * 2);
+                    mCtx.fillStyle = `rgba(36,200,185,${Math.max(a, 0)})`;
+                    mCtx.fill();
+                }
+            }
+        }
+
+        for (let i = 0; i < motes.length; i++) {
+            for (let j = i + 1; j < Math.min(i + 8, motes.length); j++) {
+                const dx = motes[i].x - motes[j].x;
+                const dy = motes[i].y - motes[j].y;
+                const d = Math.sqrt(dx*dx + dy*dy);
+                if (d < 180) {
+                    mCtx.beginPath();
+                    mCtx.moveTo(motes[i].x, motes[i].y);
+                    mCtx.lineTo(motes[j].x, motes[j].y);
+                    mCtx.strokeStyle = `rgba(36,200,185,${(1 - d/180) * 0.05})`;
+                    mCtx.lineWidth = 0.5;
+                    mCtx.stroke();
+                }
+            }
+        }
+    }
+}
+
+// ===== CAMERA (Ken Burns) =====
+function camera(sIdx, p) {
+    const map = {
+        1: { el: 'bg1', fn: (p) => `scale(${1 + p*0.08}) translate(${p*-0.5}%, ${p*-0.3}%)` },
+        3: { el: 'bg3', fn: (p) => `scale(${1.05 + p*0.04}) translateX(${-1 + p*2}%)` },
+        5: { el: 'bg5', fn: (p) => `scale(1.08) translateX(${1.5 - p*3}%) translateY(${p*-0.3}%)` },
+        7: { el: 'bg7', fn: (p) => `scale(${1.12 - p*0.07}) translate(${p*0.3}%, ${p*0.2}%)` },
+    };
+    const info = map[sIdx];
+    if (!info) return;
+    const el = document.getElementById(info.el);
+    if (el) el.style.transform = info.fn(p);
+}
+
+// ===== FLOATING ORBS =====
+function orbs(t) {
+    const s = t * 0.00025;
+    const ids = ['orbA','orbB','orbC','orbD'];
+    ids.forEach((id, i) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const ox = Math.sin(s + i * 1.5) * 35;
+        const oy = Math.cos(s + i * 1.5) * 25;
+        el.style.transform = `translate(${ox}px, ${oy}px)`;
+        el.style.opacity = '1';
+    });
+}
+
+// ===== TRANSITION =====
+function transitionTo(idx) {
+    if (idx === curIdx) return;
+    const prev = curIdx;
+    curIdx = idx;
+
+    // Flash
+    flash.style.transition = 'none';
+    flash.style.opacity = '0.12';
+    requestAnimationFrame(() => {
+        flash.style.transition = 'opacity 0.8s ease-out';
+        flash.style.opacity = '0';
+    });
+
+    // Exit old scene
+    if (prev >= 0) {
+        const oldS = scenes[prev];
+        oldS.querySelectorAll('.line-inner.revealed').forEach(el => {
+            el.classList.remove('revealed');
+            el.classList.add('exit');
+        });
+        oldS.style.transition = 'opacity 0.7s ease, transform 0.7s ease, filter 0.7s ease';
+        oldS.style.opacity = '0';
+        oldS.style.transform = 'scale(1.03)';
+        oldS.style.filter = 'blur(6px)';
+        setTimeout(() => {
+            oldS.classList.remove('active');
+            oldS.style.transition = '';
+            oldS.style.transform = '';
+            oldS.style.filter = '';
+            oldS.style.opacity = '';
+            oldS.querySelectorAll('.line-inner').forEach(el => el.classList.remove('exit'));
+        }, 800);
+    }
+
+    // Enter new scene
+    const ns = scenes[idx];
+    ns.style.opacity = '0';
+    ns.style.transform = 'scale(0.97)';
+    ns.style.filter = 'blur(4px)';
+    ns.classList.add('active');
+
+    requestAnimationFrame(() => {
+        ns.style.transition = 'opacity 0.7s ease, transform 0.7s ease, filter 0.7s ease';
+        ns.style.opacity = '1';
+        ns.style.transform = 'scale(1)';
+        ns.style.filter = 'blur(0px)';
+        setTimeout(() => { ns.style.transition = ''; }, 800);
+    });
+
+    // Watermark
+    wm.style.transition = 'opacity 0.8s ease';
+    wm.style.opacity = (idx > 0 && idx < scenes.length - 1) ? '0.2' : '0';
+
+    // Lower third
+    clearTimeout(ltTimeout);
+    const m = meta[idx];
+    if (m && m.lt) {
+        ltLabel.textContent = m.label;
+        ltTitle.textContent = m.lt;
+        setTimeout(() => lt.classList.add('show'), 800);
+        ltTimeout = setTimeout(() => {
+            lt.classList.remove('show');
+            lt.classList.add('hide');
+            setTimeout(() => lt.classList.remove('hide'), 600);
+        }, 3500);
+    } else {
+        lt.classList.remove('show');
+    }
+
+    sceneAnim(idx);
+}
+
+// ===== TEXT REVEAL =====
+function revealText(scene, delayStart) {
+    const lines = scene.querySelectorAll('.line-inner');
+    lines.forEach((l, i) => {
+        setTimeout(() => l.classList.add('revealed'), delayStart + i * 280);
+    });
+}
+
+// ===== ANIMATED COUNTERS =====
+function animateCounters(parentId, delay) {
+    setTimeout(() => {
+        const parent = document.getElementById(parentId);
+        if (!parent) return;
+        parent.style.transition = 'opacity 0.5s ease';
+        parent.style.opacity = '1';
+
+        const cards = parent.querySelectorAll('.stat-card');
+        cards.forEach((card, i) => {
+            setTimeout(() => card.classList.add('show'), i * 220);
+        });
+
+        const counters = parent.querySelectorAll('.counter');
+        counters.forEach((cEl, i) => {
+            const target = parseInt(cEl.dataset.target);
+            setTimeout(() => {
+                const startTime = performance.now();
+                const duration = 900;
+                function tick() {
+                    const elapsed = performance.now() - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    cEl.textContent = Math.round(target * eased);
+                    if (progress < 1) requestAnimationFrame(tick);
+                }
+                requestAnimationFrame(tick);
+            }, i * 220 + 150);
+        });
+    }, delay);
+}
+
+// ===== SCENE SPECIFIC ANIMS =====
+function sceneAnim(idx) {
+    const s = scenes[idx];
+
+    // Text reveal for photo scenes
+    if ([1, 3, 7].includes(idx)) {
+        revealText(s, 500);
+    }
+    if ([2, 5].includes(idx)) {
+        revealText(s, 300);
+    }
+
+    switch (idx) {
+        case 0: introAnim(); break;
+        case 2: animateCounters('statRow1', 600); break;
+        case 3: moffittAnim(); break;
+        case 4: stepsAnim(); break;
+        case 5: animateCounters('statRow2', 600); break;
+        case 6: journeyAnim(); break;
+        case 8: outroAnim(); break;
+    }
+}
+
+function introAnim() {
+    const mark = document.getElementById('iMark');
+    const word = document.getElementById('iWord');
+    const rule = document.getElementById('iRule');
+    const badge = document.getElementById('iBadge');
+    const s = scenes[0];
+
+    // Symbol snaps in immediately — first frame has motion
+    anim(mark, 0, { opacity: 1, transform: 'scale(1) rotate(0deg)' }, '0.7s cubic-bezier(0.16,1,0.3,1)');
+    // Symbol exits quickly
+    anim(mark, 900, { opacity: 0, transform: 'scale(0.8) translateY(-20px)' }, '0.4s ease');
+    // Wordmark lands
+    anim(word, 1100, { opacity: 1, transform: 'translateY(0)' }, '0.6s cubic-bezier(0.16,1,0.3,1)');
+    // Rule grows
+    setTimeout(() => { rule.style.transition = 'width 0.5s cubic-bezier(0.16,1,0.3,1)'; rule.style.width = '70px'; }, 1500);
+    // Tagline reveals — this is what hooks them
+    revealText(s, 1800);
+    // Badge
+    anim(badge, 3200, { color: 'rgba(255,255,255,0.3)' }, '0.6s ease');
+}
+
+function moffittAnim() {
+    const badge = document.getElementById('moffittBadge');
+    anim(badge, 1800, { opacity: 1 }, '0.7s ease');
+}
+
+function stepsAnim() {
+    const s = scenes[4];
+    revealText(s, 200);
+
+    ['step1','step2','step3'].forEach((id, i) => {
+        setTimeout(() => {
+            document.getElementById(id).classList.add('show');
+        }, 800 + i * 600);
+    });
+
+    ['conn1','conn2'].forEach((id, i) => {
+        setTimeout(() => {
+            document.getElementById(id).classList.add('show');
+        }, 1200 + i * 600);
+    });
+}
+
+function journeyAnim() {
+    const jTitle = document.getElementById('jTitle');
+    const jHeadline = document.getElementById('jHeadline');
+    const jFill = document.getElementById('jFill');
+    const s = scenes[6];
+
+    anim(jTitle, 200, { opacity: 1 }, '0.5s ease');
+    anim(jHeadline, 500, { opacity: 1, transform: 'translateY(0)' }, '0.7s cubic-bezier(0.16,1,0.3,1)');
+
+    // Animate line fill
+    setTimeout(() => {
+        jFill.style.transition = 'width 3s cubic-bezier(0.4,0,0.2,1)';
+        jFill.style.width = '100%';
+    }, 900);
+
+    // Activate nodes sequentially
+    ['jn0','jn1','jn2','jn3'].forEach((id, i) => {
+        setTimeout(() => {
+            document.getElementById(id).classList.add('active');
+        }, 1100 + i * 700);
+    });
+
+    // Bottom text
+    revealText(s, 3500);
+}
+
+function outroAnim() {
+    const logo = document.getElementById('oLogo');
+    const rule = document.getElementById('oRule');
+    const tag = document.getElementById('oTag');
+    const cta = document.getElementById('oCta');
+    const url = document.getElementById('oUrl');
+    const mission = document.getElementById('oMission');
+
+    anim(logo, 200, { opacity: 1, transform: 'translateY(0)' }, '0.7s cubic-bezier(0.16,1,0.3,1)');
+    setTimeout(() => { rule.style.transition = 'width 0.5s cubic-bezier(0.16,1,0.3,1)'; rule.style.width = '55px'; }, 600);
+    anim(tag, 900, { opacity: 1, transform: 'translateY(0)' }, '0.7s cubic-bezier(0.16,1,0.3,1)');
+    anim(cta, 1600, { color: 'rgba(255,255,255,1)', transform: 'translateY(0)' }, '0.6s cubic-bezier(0.16,1,0.3,1)');
+    anim(url, 2200, { color: 'rgba(255,255,255,0.3)' }, '0.7s ease');
+    anim(mission, 2800, { color: 'rgba(255,255,255,0.35)' }, '0.7s ease');
+}
+
+function anim(el, delay, props, transition) {
+    setTimeout(() => {
+        el.style.transition = `all ${transition}`;
+        Object.assign(el.style, props);
+    }, delay);
+}
+
+// ===== GLOBAL TIME =====
+function getTime() {
+    return playing ? (performance.now() - t0) + tOffset : tOffset;
+}
+
+function fmt(ms) {
+    const s = Math.floor(ms / 1000);
+    return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
+}
+
+// ===== MAIN LOOP =====
+function tick() {
+    const gt = Math.min(getTime(), totalDur);
+
+    pFill.style.width = (gt / totalDur * 100) + '%';
+    tcEl.textContent = `${fmt(gt)} / ${fmt(totalDur)}`;
+
+    let aIdx = tl.length - 1;
+    for (let i = 0; i < tl.length; i++) {
+        if (gt < tl[i].start + tl[i].dur) { aIdx = i; break; }
+    }
+
+    if (aIdx !== curIdx) transitionTo(aIdx);
+
+    const sp = (gt - tl[aIdx].start) / tl[aIdx].dur;
+
+    camera(aIdx, sp);
+    orbs(gt);
+    drawCanvas(gt, aIdx, sp);
+    updateGrain();
+
+    if (gt < totalDur) requestAnimationFrame(tick);
+}
+
+// ===== CONTROLS =====
+function togglePlay() {
+    if (playing) {
+        playing = false;
+        tOffset = getTime();
+        document.getElementById('pBtn').innerHTML = '&#9654;';
+    } else {
+        playing = true;
+        t0 = performance.now();
+        document.getElementById('pBtn').innerHTML = '&#10074;&#10074;';
+        requestAnimationFrame(tick);
+    }
+}
+
+function jumpTo(idx) {
+    tOffset = tl[idx].start;
+    t0 = performance.now();
+    curIdx = -1;
+    scenes.forEach(s => {
+        s.classList.remove('active');
+        s.style.opacity = ''; s.style.transform = ''; s.style.filter = '';
+        s.querySelectorAll('.line-inner').forEach(l => l.classList.remove('revealed','exit'));
+    });
+
+    // Reset intro
+    const iMark = document.getElementById('iMark');
+    const iWord = document.getElementById('iWord');
+    const iRule = document.getElementById('iRule');
+    const iBadge = document.getElementById('iBadge');
+    iMark.style.transition = 'none'; iMark.style.opacity = '0'; iMark.style.transform = 'scale(0.5) rotate(-8deg)';
+    iWord.style.transition = 'none'; iWord.style.opacity = '0'; iWord.style.transform = 'translateY(10px)';
+    iRule.style.transition = 'none'; iRule.style.width = '0';
+    iBadge.style.transition = 'none'; iBadge.style.color = 'rgba(255,255,255,0)';
+
+    // Reset stats
+    ['statRow1','statRow2'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.style.transition = 'none'; el.style.opacity = '0';
+            el.querySelectorAll('.stat-card').forEach(c => c.classList.remove('show'));
+            el.querySelectorAll('.counter').forEach(c => c.textContent = '0');
+        }
+    });
+
+    // Reset steps
+    ['step1','step2','step3'].forEach(id => document.getElementById(id).classList.remove('show'));
+    ['conn1','conn2'].forEach(id => document.getElementById(id).classList.remove('show'));
+
+    // Reset journey
+    const jFill = document.getElementById('jFill');
+    const jTitle = document.getElementById('jTitle');
+    const jHeadline = document.getElementById('jHeadline');
+    jFill.style.transition = 'none'; jFill.style.width = '0';
+    jTitle.style.transition = 'none'; jTitle.style.opacity = '0';
+    jHeadline.style.transition = 'none'; jHeadline.style.opacity = '0'; jHeadline.style.transform = 'translateY(15px)';
+    ['jn0','jn1','jn2','jn3'].forEach(id => document.getElementById(id).classList.remove('active'));
+
+    // Reset moffitt badge
+    const mb = document.getElementById('moffittBadge');
+    mb.style.transition = 'none'; mb.style.opacity = '0';
+
+    // Reset outro
+    const oLogo = document.getElementById('oLogo');
+    const oRule = document.getElementById('oRule');
+    const oTag = document.getElementById('oTag');
+    const oCta = document.getElementById('oCta');
+    const oUrl = document.getElementById('oUrl');
+    const oMission = document.getElementById('oMission');
+    oLogo.style.transition = 'none'; oLogo.style.opacity = '0';
+    oRule.style.transition = 'none'; oRule.style.width = '0';
+    oTag.style.transition = 'none'; oTag.style.opacity = '0'; oTag.style.transform = 'translateY(14px)';
+    oCta.style.transition = 'none'; oCta.style.color = 'rgba(255,255,255,0)'; oCta.style.transform = 'translateY(10px)';
+    oUrl.style.transition = 'none'; oUrl.style.color = 'rgba(255,255,255,0)';
+    oMission.style.transition = 'none'; oMission.style.color = 'rgba(255,255,255,0)';
+
+    if (!playing) { playing = true; document.getElementById('pBtn').innerHTML = '&#10074;&#10074;'; }
+    requestAnimationFrame(tick);
+}
+
+function next() { jumpTo(Math.min(curIdx + 1, scenes.length - 1)); }
+function prev() { jumpTo(Math.max(curIdx - 1, 0)); }
+function restart() { jumpTo(0); }
+
+document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
+    if (e.key === 'ArrowLeft') prev();
+    if (e.key === 'p') togglePlay();
+    if (e.key === 'r') restart();
+});
+
+// ===== VIEWPORT SCALING =====
+function scaleToFit() {
+    const sx = window.innerWidth / 1920;
+    const sy = window.innerHeight / 1080;
+    const s = Math.min(sx, sy);
+    const ox = (window.innerWidth - 1920 * s) / 2;
+    const oy = (window.innerHeight - 1080 * s) / 2;
+    document.body.style.transform = `translate(${ox}px, ${oy}px) scale(${s})`;
+}
+
+scaleToFit();
+window.addEventListener('resize', scaleToFit);
+
+renderGrain();
+requestAnimationFrame(tick);
+</script>
+</body>
+</html>

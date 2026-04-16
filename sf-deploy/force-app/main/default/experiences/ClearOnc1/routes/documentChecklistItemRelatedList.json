@@ -1,0 +1,11 @@
+{
+  "activeViewId" : "8d7d6542-fa5d-45f0-b682-082c01b74d43",
+  "appPageId" : "92f3824a-4c4a-462f-b1dd-367efc2be930",
+  "configurationTags" : [ ],
+  "devName" : "Document_Checklist_Item_Related_List__c",
+  "id" : "214a37dd-8fab-4619-9c2e-9d884f81c6bd",
+  "label" : "Document Checklist Item Related List",
+  "routeType" : "relatedlist-0dd",
+  "type" : "route",
+  "urlPrefix" : "documentchecklistitem"
+}

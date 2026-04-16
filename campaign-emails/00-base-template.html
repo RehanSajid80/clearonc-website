@@ -1,0 +1,108 @@
+<!--
+  ClearOnc Awareness Campaign — Base Template
+  Copy this into HubSpot: Marketing > Email > Create email > Drag & drop > Code module
+  Replace {{SUBJECT}}, {{PREVIEW}}, {{HEADLINE}}, {{BODY}}, {{CTA_TEXT}}, {{CTA_URL}}
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{SUBJECT}}</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f6f9;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
+
+<!-- Wrapper -->
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f6f9;">
+<tr><td align="center" style="padding:40px 20px;">
+
+<!-- Email Container -->
+<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+
+  <!-- Header with logo -->
+  <tr>
+    <td style="padding:32px 40px 24px;text-align:center;">
+      <img src="https://rehansajid80.github.io/clearonc-website/Logo%20-%20blue.png" alt="ClearOnc Insights" width="180" style="display:inline-block;">
+    </td>
+  </tr>
+
+  <!-- Teal accent line -->
+  <tr>
+    <td style="padding:0 40px;">
+      <div style="height:2px;background:linear-gradient(90deg,#24C8B9,#A2DCE9);border-radius:2px;"></div>
+    </td>
+  </tr>
+
+  <!-- Headline -->
+  <tr>
+    <td style="padding:32px 40px 16px;">
+      <h1 style="margin:0;font-size:26px;font-weight:600;color:#20366A;line-height:1.3;">
+        {{HEADLINE}}
+      </h1>
+    </td>
+  </tr>
+
+  <!-- Body -->
+  <tr>
+    <td style="padding:0 40px 24px;">
+      <div style="font-size:16px;color:#4a5568;line-height:1.7;">
+        {{BODY}}
+      </div>
+    </td>
+  </tr>
+
+  <!-- CTA Button -->
+  <tr>
+    <td style="padding:8px 40px 36px;">
+      <table role="presentation" cellpadding="0" cellspacing="0">
+        <tr>
+          <td style="background:#FF7900;border-radius:8px;">
+            <a href="{{CTA_URL}}" style="display:inline-block;padding:14px 32px;font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
+              {{CTA_TEXT}} &rarr;
+            </a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <!-- Moffitt badge -->
+  <tr>
+    <td style="padding:0 40px 32px;">
+      <table role="presentation" cellpadding="0" cellspacing="0" style="background:#f7f9fc;border-radius:8px;width:100%;">
+        <tr>
+          <td style="padding:16px 20px;">
+            <p style="margin:0;font-size:13px;color:#718096;line-height:1.5;">
+              <strong style="color:#20366A;">Delivered by Moffitt Cancer Center</strong><br>
+              NCI-Designated Comprehensive Cancer Center &bull; 50+ cancer subspecialties
+            </p>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+</table>
+<!-- /Email Container -->
+
+<!-- Footer -->
+<table role="presentation" width="600" cellpadding="0" cellspacing="0">
+  <tr>
+    <td style="padding:24px 40px;text-align:center;">
+      <p style="margin:0 0 8px;font-size:12px;color:#a0aec0;">
+        ClearOnc Insights &bull; An AccelerOnc Studio Company
+      </p>
+      <p style="margin:0;font-size:12px;color:#a0aec0;">
+        <a href="https://rehansajid80.github.io/clearonc-website/" style="color:#24C8B9;text-decoration:none;">Visit Website</a>
+        &nbsp;&bull;&nbsp;
+        <a href="%7B%7B unsubscribe_link %7D%7D" style="color:#a0aec0;text-decoration:underline;">Unsubscribe</a>
+      </p>
+    </td>
+  </tr>
+</table>
+
+</td></tr>
+</table>
+
+</body>
+</html>

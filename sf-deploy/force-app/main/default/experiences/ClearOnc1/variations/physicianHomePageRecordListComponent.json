@@ -1,0 +1,13 @@
+{
+  "componentVariants" : [ {
+    "id" : "f18bd862-f38f-45fd-8d12-3d471aaa40f5",
+    "propertyOverrides" : {
+      "isVisible" : true
+    },
+    "targetId" : "10ad4a54-6f4a-4e3d-9a47-5a99f5453c0d",
+    "type" : "componentVariant"
+  } ],
+  "developerName" : "Physician_Home_Page_Record_List_Component",
+  "id" : "b7a5b128-00e0-4df1-88c2-4152b57d3380",
+  "type" : "experienceVariation"
+}

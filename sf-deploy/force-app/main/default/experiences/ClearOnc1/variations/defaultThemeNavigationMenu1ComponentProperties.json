@@ -1,0 +1,15 @@
+{
+  "componentVariants" : [ {
+    "id" : "d41f8032-e95a-433f-b1a6-c12209cd481f",
+    "propertyOverrides" : {
+      "componentAttributes" : {
+        "navigationMenuEditorRefresh" : "Physician"
+      }
+    },
+    "targetId" : "3af5c873-9f58-47b4-a183-ae56a2011dbf",
+    "type" : "componentVariant"
+  } ],
+  "developerName" : "Default_Theme_Navigation_Menu_1_Component_Properties",
+  "id" : "ebc68697-fc85-4fb8-b64e-31eda2628e5c",
+  "type" : "experienceVariation"
+}

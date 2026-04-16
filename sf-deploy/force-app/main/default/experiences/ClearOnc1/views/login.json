@@ -1,0 +1,63 @@
+{
+  "appPageId" : "b4d8e74f-5242-4745-94dc-0e33dbe5808b",
+  "componentName" : "siteforce:sldsOneColLayout",
+  "dataProviders" : [ ],
+  "id" : "e504c0a9-7e9a-4ff1-88d3-e4663fc5188b",
+  "label" : "Login",
+  "regions" : [ {
+    "components" : [ {
+      "componentAttributes" : { },
+      "componentName" : "salesforceIdentity:communityLogo2",
+      "id" : "6a52da59-4dc6-432f-af3a-edcef78cdc41",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    }, {
+      "componentAttributes" : {
+        "forgotPasswordLabel" : "Forgot your password?",
+        "forgotPasswordUrl" : "/ForgotPassword",
+        "loginButtonLabel" : "Log in",
+        "passwordLabel" : "Password",
+        "selfRegisterLabel" : "Not a member?",
+        "selfRegisterUrl" : "/SelfRegister",
+        "startUrl" : "",
+        "usernameLabel" : "Username"
+      },
+      "componentName" : "salesforceIdentity:loginForm2",
+      "id" : "5a3a262f-d3ea-4da0-b080-6fca72ae7be2",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    }, {
+      "componentAttributes" : {
+        "richTextValue" : "<p>Please send an e-mail to \n    <a href=\"mailto:support@clearonc.com\" style=\"color: #0250D9; text-decoration: none; font-weight: 500;\">\n        support@clearonc.com\n    </a> \n    if you forgot your username.\n</p>"
+      },
+      "componentName" : "forceCommunity:htmlBlock",
+      "id" : "40ad2f4b-7c6d-4e95-b9c6-d34a71a32974",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "d4f10d00-b2f0-47ea-985a-d330985895ca",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "Login"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "34695c2d-3fe3-4de3-9e6c-fe36280a8455",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "19c520ff-13e0-474f-88c7-25bd18424b39",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Login",
+  "type" : "view",
+  "viewType" : "login-home"
+}

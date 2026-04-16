@@ -1,0 +1,62 @@
+{
+  "appPageId" : "92f3824a-4c4a-462f-b1dd-367efc2be930",
+  "componentName" : "siteforce:sldsTwoCol84SidebarFeaturedLayout",
+  "dataProviders" : [ ],
+  "id" : "331a501a-e76f-4d8f-88f2-c0c1c4a49f66",
+  "label" : "Home",
+  "regions" : [ {
+    "components" : [ {
+      "componentAttributes" : {
+        "bannerText" : "A place where you can easily find solutions and ask questions",
+        "bannerTextWithKnowledge" : "Explore other <a href=\"javascript:void(0)\" class=\"headlineArticles\">articles</a> and <a href=\"javascript:void(0)\" class=\"headlineDiscussions\">discussions</a> on this topic.",
+        "bannerTextWithoutKnowledge" : "Explore other <a href=\"javascript:void(0)\" class=\"headlineDiscussions\">discussions</a> on this topic.",
+        "pageType" : "",
+        "showSubTopics" : true,
+        "title" : "Welcome!",
+        "uniqueNameOrId" : ""
+      },
+      "componentName" : "forceCommunity:headline",
+      "id" : "fc6289cf-0893-41b3-a595-fdec5a7357bc",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "4582df0d-4b8a-423e-953a-161d1c5804a8",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "id" : "32b606e0-61ba-46f9-8b3a-4d3c2da53635",
+    "regionName" : "featured",
+    "type" : "region"
+  }, {
+    "id" : "cbf2cc71-04c5-49ef-ada5-a4cbed814929",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "id" : "35d9ed2e-bf5e-4f9a-8a44-ee2809f6ec0f",
+    "regionName" : "sidebar",
+    "type" : "region"
+  }, {
+    "id" : "80720a1c-5c2c-483c-8624-e0716af6789f",
+    "regionName" : "footer",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "Home"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "77b2fb57-a1ed-4b60-9193-b740cd9eed32",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "d6d8f0d0-502f-414c-b0ff-1333538c05a4",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Home",
+  "type" : "view",
+  "viewType" : "home"
+}

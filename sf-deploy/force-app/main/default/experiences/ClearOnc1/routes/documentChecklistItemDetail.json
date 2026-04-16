@@ -1,0 +1,11 @@
+{
+  "activeViewId" : "2c421ef7-6d2e-4f4c-84ef-90160e955f39",
+  "appPageId" : "92f3824a-4c4a-462f-b1dd-367efc2be930",
+  "configurationTags" : [ ],
+  "devName" : "Document_Checklist_Item_Detail__c",
+  "id" : "c520cecc-796b-4f3c-985a-ed4469f1919e",
+  "label" : "Document Checklist Item Detail",
+  "routeType" : "detail-0dd",
+  "type" : "route",
+  "urlPrefix" : "documentchecklistitem"
+}

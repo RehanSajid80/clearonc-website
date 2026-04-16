@@ -1,0 +1,74 @@
+{
+  "appPageId" : "92f3824a-4c4a-462f-b1dd-367efc2be930",
+  "componentName" : "siteforce:sldsTwoCol66Layout",
+  "dataProviders" : [ ],
+  "id" : "02b8ab8a-2595-46c8-a9f9-1a3d1751cdf8",
+  "label" : "Contact Support",
+  "regions" : [ {
+    "components" : [ {
+      "componentAttributes" : {
+        "attachFiles" : true,
+        "authenticatedActionName" : "NewCommunityCase",
+        "confirmationMessageDescription" : "You'll hear back from us soon.",
+        "confirmationMessageTitle" : "Your request was submitted successfully.",
+        "deflectionCategoryGroupName" : "",
+        "deflectionNotHelpful" : "",
+        "deflectionNumberOfArticles" : "",
+        "deflectionParentCategory" : "",
+        "deflectionSubHeader" : "",
+        "deflectionTitle" : "",
+        "hasDeflection" : false,
+        "headerTitle" : "Create a Support Request",
+        "isReCaptchaEnabled" : false,
+        "reCaptchaPrivateKey" : "",
+        "reCaptchaPublicKey" : "",
+        "unauthenticatedActionName" : ""
+      },
+      "componentName" : "selfService:caseCreate",
+      "id" : "20441e75-7a5f-490a-950e-c67760215bd2",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    }, {
+      "componentAttributes" : { },
+      "componentName" : "c:navyaLogin",
+      "id" : "2b1589db-b00b-48e6-a6bf-c095f611953a",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "1ef03b2a-74f0-4ee0-a647-1844f4ab6c2a",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "id" : "03900602-5d1c-4b37-8868-41a0520893b6",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "id" : "f3ccfaff-5b97-4791-b7d3-dd2305848e56",
+    "regionName" : "sidebar",
+    "type" : "region"
+  }, {
+    "id" : "4e26c3e1-b053-446b-9dec-18a446702349",
+    "regionName" : "footer",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "Contact Support"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "94d5b81e-1827-4c72-b0eb-08d057fe83ca",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "3c584b73-505c-433e-b9b6-20e4f469bc2c",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "contactsupport"
+}

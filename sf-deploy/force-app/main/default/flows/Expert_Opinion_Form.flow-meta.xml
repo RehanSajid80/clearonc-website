@@ -1,0 +1,580 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+
+    <choices>
+        <name>Q1_Choice_No</name>
+        <choiceText>No, additional diagnostic tests are not required/indicated at this time</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No additional diagnostic tests required</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Q1_Choice_Yes</name>
+        <choiceText>Yes, additional diagnostic tests including the following may be considered</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Yes additional diagnostic tests recommended</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Q2_Choice_Yes</name>
+        <choiceText>Yes, I concur with the current diagnosis of the cancer</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Yes I concur with the diagnosis</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Q2_Choice_No</name>
+        <choiceText>No, the following changes/clarifications apply to the diagnosis</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No changes or clarifications apply</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Q3_Choice_Yes</name>
+        <choiceText>Yes, I concur with the current staging of the cancer</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Yes I concur with the staging</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Q3_Choice_No</name>
+        <choiceText>No, the following changes/clarifications apply to the staging</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No changes or clarifications apply</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Q4_Choice_Cure</name>
+        <choiceText>Cure</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Cure</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Q4_Choice_Disease_Control</name>
+        <choiceText>Disease Control (or Regional Control)</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Disease Control or Regional Control</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Q4_Choice_Palliation</name>
+        <choiceText>Palliation</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Palliation</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Q4_Choice_Other</name>
+        <choiceText>Other clinical endpoints</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Other</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Q5_Choice_Yes</name>
+        <choiceText>Yes, I concur with current treatment plan</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Yes concur with current treatment plan</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Q5_Choice_Enhanced</name>
+        <choiceText>Current treatment plan may be enhanced/modified with the following considerations</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Treatment may be enhanced or modified</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Q5_Choice_No</name>
+        <choiceText>No, treatment plan has not yet been formulated/is not available for review</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No treatment plan not yet formulated</stringValue>
+        </value>
+    </choices>
+
+    <environments>Default</environments>
+    <interviewLabel>Expert Opinion Form {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Expert Opinion Form</label>
+
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+
+    <recordLookups>
+        <name>Get_Case</name>
+        <label>Get Case</label>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Opinion_Status</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <object>Case</object>
+        <outputReference>varCase</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Diagnostic_Tests__c</queriedFields>
+        <queriedFields>Diagnostic_Tests_Details__c</queriedFields>
+        <queriedFields>Concur_Diagnosis__c</queriedFields>
+        <queriedFields>Concur_Diagnosis_Details__c</queriedFields>
+        <queriedFields>Concur_Staging__c</queriedFields>
+        <queriedFields>Concur_Staging_Details__c</queriedFields>
+        <queriedFields>Prognosis__c</queriedFields>
+        <queriedFields>Prognosis_Details__c</queriedFields>
+        <queriedFields>Concur_Treatment__c</queriedFields>
+        <queriedFields>Concur_Treatment_Details__c</queriedFields>
+        <queriedFields>Patient_Specific_Answers__c</queriedFields>
+        <queriedFields>Opinion_Status__c</queriedFields>
+    </recordLookups>
+
+    <recordUpdates>
+        <name>Update_Case_Record</name>
+        <label>Update Case Record</label>
+        <locationX>176</locationX>
+        <locationY>398</locationY>
+        <connector>
+            <targetReference>Success_Screen</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Diagnostic_Tests__c</field>
+            <value>
+                <elementReference>Q1_Diagnostic_Tests</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Diagnostic_Tests_Details__c</field>
+            <value>
+                <elementReference>Q1_Details</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Concur_Diagnosis__c</field>
+            <value>
+                <elementReference>Q2_Concur_Diagnosis</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Concur_Diagnosis_Details__c</field>
+            <value>
+                <elementReference>Q2_Details</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Concur_Staging__c</field>
+            <value>
+                <elementReference>Q3_Concur_Staging</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Concur_Staging_Details__c</field>
+            <value>
+                <elementReference>Q3_Details</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Prognosis__c</field>
+            <value>
+                <elementReference>Q4_Prognosis</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Prognosis_Details__c</field>
+            <value>
+                <elementReference>Q4_Details</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Concur_Treatment__c</field>
+            <value>
+                <elementReference>Q5_Concur_Treatment</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Concur_Treatment_Details__c</field>
+            <value>
+                <elementReference>Q5_Details</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Patient_Specific_Answers__c</field>
+            <value>
+                <elementReference>Q6_Patient_Answers</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Opinion_Status__c</field>
+            <value>
+                <stringValue>Submitted</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+
+    <decisions>
+        <name>Check_Opinion_Status</name>
+        <label>Check Opinion Status</label>
+        <locationX>352</locationX>
+        <locationY>218</locationY>
+        <defaultConnector>
+            <targetReference>Expert_Opinion_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Yet Submitted</defaultConnectorLabel>
+        <rules>
+            <name>Already_Submitted</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>varCase.Opinion_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Submitted</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varCase.Opinion_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Approved</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Review_Screen</targetReference>
+            </connector>
+            <label>Already Submitted or Approved</label>
+        </rules>
+    </decisions>
+
+    <runInMode>DefaultMode</runInMode>
+
+    <screens>
+        <name>Expert_Opinion_Screen</name>
+        <label>My Expert Consult</label>
+        <locationX>176</locationX>
+        <locationY>278</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Update_Case_Record</targetReference>
+        </connector>
+        <pausedText>Your progress has been saved. You can return to complete the Expert Consult later.</pausedText>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+        <fields>
+            <name>Q1_Header</name>
+            <fieldType>DisplayText</fieldType>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;1. Are there any additional Diagnostic tests that you recommend at this time to guide treatment decisions?&lt;/b&gt;&lt;/p&gt;</fieldText>
+        </fields>
+        <fields>
+            <name>Q1_Diagnostic_Tests</name>
+            <fieldType>RadioButtons</fieldType>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>varCase.Diagnostic_Tests__c</elementReference>
+            </defaultValue>
+            <fieldText>Select one</fieldText>
+            <isRequired>false</isRequired>
+            <choiceReferences>Q1_Choice_No</choiceReferences>
+            <choiceReferences>Q1_Choice_Yes</choiceReferences>
+        </fields>
+        <fields>
+            <name>Q1_Details</name>
+            <fieldType>LargeTextArea</fieldType>
+            <defaultValue>
+                <elementReference>varCase.Diagnostic_Tests_Details__c</elementReference>
+            </defaultValue>
+            <fieldText>Please provide detailed comments or justifications</fieldText>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Q1_Diagnostic_Tests</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Yes additional diagnostic tests recommended</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Q2_Header</name>
+            <fieldType>DisplayText</fieldType>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;2. Do you concur with the diagnosis of the cancer?&lt;/b&gt;&lt;/p&gt;</fieldText>
+        </fields>
+        <fields>
+            <name>Q2_Concur_Diagnosis</name>
+            <fieldType>RadioButtons</fieldType>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>varCase.Concur_Diagnosis__c</elementReference>
+            </defaultValue>
+            <fieldText>Select one</fieldText>
+            <isRequired>false</isRequired>
+            <choiceReferences>Q2_Choice_Yes</choiceReferences>
+            <choiceReferences>Q2_Choice_No</choiceReferences>
+        </fields>
+        <fields>
+            <name>Q2_Details</name>
+            <fieldType>LargeTextArea</fieldType>
+            <defaultValue>
+                <elementReference>varCase.Concur_Diagnosis_Details__c</elementReference>
+            </defaultValue>
+            <fieldText>Please provide detailed comments or justifications</fieldText>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Q2_Concur_Diagnosis</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>No changes or clarifications apply</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Q3_Header</name>
+            <fieldType>DisplayText</fieldType>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;3. Do you concur with the staging of the cancer?&lt;/b&gt;&lt;/p&gt;</fieldText>
+        </fields>
+        <fields>
+            <name>Q3_Concur_Staging</name>
+            <fieldType>RadioButtons</fieldType>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>varCase.Concur_Staging__c</elementReference>
+            </defaultValue>
+            <fieldText>Select one</fieldText>
+            <isRequired>false</isRequired>
+            <choiceReferences>Q3_Choice_Yes</choiceReferences>
+            <choiceReferences>Q3_Choice_No</choiceReferences>
+        </fields>
+        <fields>
+            <name>Q3_Details</name>
+            <fieldType>LargeTextArea</fieldType>
+            <defaultValue>
+                <elementReference>varCase.Concur_Staging_Details__c</elementReference>
+            </defaultValue>
+            <fieldText>Please provide detailed comments or justifications</fieldText>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Q3_Concur_Staging</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>No changes or clarifications apply</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Q4_Header</name>
+            <fieldType>DisplayText</fieldType>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;4. What is the overall prognosis of disease in this case? What are your treatment goals in this case?&lt;/b&gt;&lt;/p&gt;</fieldText>
+        </fields>
+        <fields>
+            <name>Q4_Prognosis</name>
+            <fieldType>RadioButtons</fieldType>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>varCase.Prognosis__c</elementReference>
+            </defaultValue>
+            <fieldText>Select one</fieldText>
+            <isRequired>false</isRequired>
+            <choiceReferences>Q4_Choice_Cure</choiceReferences>
+            <choiceReferences>Q4_Choice_Disease_Control</choiceReferences>
+            <choiceReferences>Q4_Choice_Palliation</choiceReferences>
+            <choiceReferences>Q4_Choice_Other</choiceReferences>
+        </fields>
+        <fields>
+            <name>Q4_Details</name>
+            <fieldType>LargeTextArea</fieldType>
+            <defaultValue>
+                <elementReference>varCase.Prognosis_Details__c</elementReference>
+            </defaultValue>
+            <fieldText>Please provide detailed comments or justifications</fieldText>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>Q5_Header</name>
+            <fieldType>DisplayText</fieldType>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;5. Do you concur with the current treatment in this case?&lt;/b&gt;&lt;/p&gt;</fieldText>
+        </fields>
+        <fields>
+            <name>Q5_Concur_Treatment</name>
+            <fieldType>RadioButtons</fieldType>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>varCase.Concur_Treatment__c</elementReference>
+            </defaultValue>
+            <fieldText>Select one</fieldText>
+            <isRequired>false</isRequired>
+            <choiceReferences>Q5_Choice_Yes</choiceReferences>
+            <choiceReferences>Q5_Choice_Enhanced</choiceReferences>
+            <choiceReferences>Q5_Choice_No</choiceReferences>
+        </fields>
+        <fields>
+            <name>Q5_Details</name>
+            <fieldType>LargeTextArea</fieldType>
+            <defaultValue>
+                <elementReference>varCase.Concur_Treatment_Details__c</elementReference>
+            </defaultValue>
+            <fieldText>Please provide detailed comments or justifications</fieldText>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>Q5_Concur_Treatment</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Treatment may be enhanced or modified</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Q5_Concur_Treatment</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>No treatment plan not yet formulated</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Q6_Header</name>
+            <fieldType>DisplayText</fieldType>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;6. Please provide answers to any Patient Specific questions that are associated with this case:&lt;/b&gt;&lt;/p&gt;</fieldText>
+        </fields>
+        <fields>
+            <name>Q6_Patient_Answers</name>
+            <fieldType>LargeTextArea</fieldType>
+            <defaultValue>
+                <elementReference>varCase.Patient_Specific_Answers__c</elementReference>
+            </defaultValue>
+            <fieldText>Patient specific answers</fieldText>
+            <isRequired>false</isRequired>
+        </fields>
+    </screens>
+    <screens>
+        <name>Success_Screen</name>
+        <label>Consultation Submitted</label>
+        <locationX>176</locationX>
+        <locationY>518</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+        <fields>
+            <name>Success_Message</name>
+            <fieldType>DisplayText</fieldType>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 128, 0); font-size: 16px;&quot;&gt;&lt;b&gt;Consultation finalized successfully&lt;/b&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Your Expert Consult has been submitted. The Care Navigator will review your responses.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Once submitted, the case cannot be edited without the Care Navigator.&lt;/p&gt;</fieldText>
+        </fields>
+    </screens>
+
+    <screens>
+        <name>Review_Screen</name>
+        <label>Expert Opinion Review</label>
+        <locationX>528</locationX>
+        <locationY>218</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+        <fields>
+            <name>Review_Status_Banner</name>
+            <fieldType>DisplayText</fieldType>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;&lt;b&gt;Expert Opinion Review&lt;/b&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Status:&lt;/b&gt; {!varCase.Opinion_Status__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;hr&gt;</fieldText>
+        </fields>
+        <fields>
+            <name>Review_Q1</name>
+            <fieldType>DisplayText</fieldType>
+            <fieldText>&lt;p&gt;&lt;b&gt;1. Are there any additional Diagnostic tests that you recommend?&lt;/b&gt;&lt;/p&gt;&lt;p&gt;{!varCase.Diagnostic_Tests__c}&lt;/p&gt;&lt;p&gt;{!varCase.Diagnostic_Tests_Details__c}&lt;/p&gt;</fieldText>
+        </fields>
+        <fields>
+            <name>Review_Q2</name>
+            <fieldType>DisplayText</fieldType>
+            <fieldText>&lt;p&gt;&lt;b&gt;2. Do you concur with the diagnosis of the cancer?&lt;/b&gt;&lt;/p&gt;&lt;p&gt;{!varCase.Concur_Diagnosis__c}&lt;/p&gt;&lt;p&gt;{!varCase.Concur_Diagnosis_Details__c}&lt;/p&gt;</fieldText>
+        </fields>
+        <fields>
+            <name>Review_Q3</name>
+            <fieldType>DisplayText</fieldType>
+            <fieldText>&lt;p&gt;&lt;b&gt;3. Do you concur with the staging of the cancer?&lt;/b&gt;&lt;/p&gt;&lt;p&gt;{!varCase.Concur_Staging__c}&lt;/p&gt;&lt;p&gt;{!varCase.Concur_Staging_Details__c}&lt;/p&gt;</fieldText>
+        </fields>
+        <fields>
+            <name>Review_Q4</name>
+            <fieldType>DisplayText</fieldType>
+            <fieldText>&lt;p&gt;&lt;b&gt;4. What is the overall prognosis? What are your treatment goals?&lt;/b&gt;&lt;/p&gt;&lt;p&gt;{!varCase.Prognosis__c}&lt;/p&gt;&lt;p&gt;{!varCase.Prognosis_Details__c}&lt;/p&gt;</fieldText>
+        </fields>
+        <fields>
+            <name>Review_Q5</name>
+            <fieldType>DisplayText</fieldType>
+            <fieldText>&lt;p&gt;&lt;b&gt;5. Do you concur with the current treatment?&lt;/b&gt;&lt;/p&gt;&lt;p&gt;{!varCase.Concur_Treatment__c}&lt;/p&gt;&lt;p&gt;{!varCase.Concur_Treatment_Details__c}&lt;/p&gt;</fieldText>
+        </fields>
+        <fields>
+            <name>Review_Q6</name>
+            <fieldType>DisplayText</fieldType>
+            <fieldText>&lt;p&gt;&lt;b&gt;6. Patient Specific Answers:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;{!varCase.Patient_Specific_Answers__c}&lt;/p&gt;</fieldText>
+        </fields>
+    </screens>
+
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Case</targetReference>
+        </connector>
+    </start>
+
+    <status>Active</status>
+
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varCase</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+</Flow>

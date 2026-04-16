@@ -1,0 +1,101 @@
+{
+  "appPageId" : "92f3824a-4c4a-462f-b1dd-367efc2be930",
+  "componentName" : "siteforce:sldsOneColLayout",
+  "dataProviders" : [ ],
+  "id" : "9ffbe3c8-550a-418f-8560-763a8c82bed3",
+  "label" : "Case List (1)",
+  "regions" : [ {
+    "id" : "c0f669a2-c75f-4331-96b2-50858592a5d9",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "tabsetConfig" : {
+          "UUID" : "8a60e75d-2844-4e9b-8c3d-b7c59e45a9f6",
+          "activeTab" : "",
+          "tabs" : [ {
+            "UUID" : "f1426272-30ed-43b5-b9d5-e7bc893968dd",
+            "allowGuestUser" : false,
+            "locked" : false,
+            "seedComponents" : [ ],
+            "tabKey" : "1",
+            "tabName" : "New Cases"
+          }, {
+            "UUID" : "374d6ace-43af-4232-8340-3d2d8bff25ec",
+            "allowGuestUser" : false,
+            "locked" : false,
+            "seedComponents" : [ ],
+            "tabKey" : "2",
+            "tabName" : "In Progress Cases"
+          }, {
+            "UUID" : "29b9e179-a8ec-4310-a74b-dc0a309eb0fd",
+            "allowGuestUser" : false,
+            "locked" : false,
+            "seedComponents" : [ ],
+            "tabKey" : "3",
+            "tabName" : "Closed Cases"
+          } ],
+          "useOverflowMenu" : true
+        }
+      },
+      "componentName" : "forceCommunity:tabLayout",
+      "id" : "8a60e75d-2844-4e9b-8c3d-b7c59e45a9f6",
+      "regions" : [ {
+        "components" : [ {
+          "componentAttributes" : {
+            "enableInlineEdit" : true,
+            "filterName" : "{!filterId}",
+            "layout" : "FULL",
+            "pageSize" : 25,
+            "scope" : "{!objectName}",
+            "showActionBar" : true,
+            "showChartsPanel" : true,
+            "showDisplay" : "showall",
+            "showFilterPanel" : true,
+            "showImageIcon" : true,
+            "showManualRefreshButton" : true,
+            "showObjectName" : true,
+            "showPinnedList" : true,
+            "showSearchBar" : true
+          },
+          "componentName" : "forceCommunity:objectHome",
+          "id" : "cc9b10a4-5796-4da2-82bb-182bf959f40a",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : { },
+          "type" : "component"
+        } ],
+        "id" : "f1426272-30ed-43b5-b9d5-e7bc893968dd",
+        "regionLabel" : "New Cases",
+        "regionName" : "1",
+        "renditionMap" : { },
+        "type" : "region"
+      }, {
+        "id" : "374d6ace-43af-4232-8340-3d2d8bff25ec",
+        "regionLabel" : "In Progress Cases",
+        "regionName" : "2",
+        "renditionMap" : { },
+        "type" : "region"
+      }, {
+        "id" : "29b9e179-a8ec-4310-a74b-dc0a309eb0fd",
+        "regionLabel" : "Closed Cases",
+        "regionName" : "3",
+        "renditionMap" : { },
+        "type" : "region"
+      } ],
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "6405e743-f273-4a77-bdf8-826258e6fef3",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "id" : "6bc044da-9d80-4aa3-bcb1-63ece6df1e2b",
+    "regionName" : "footer",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "list-500"
+}

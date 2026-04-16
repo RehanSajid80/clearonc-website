@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, height=1080">
+    <title>ClearOnc Insights — 3 Minute Video</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #20366A;
+            --midnight: #00232B;
+            --orange: #FF7900;
+            --teal: #24C8B9;
+            --light-blue: #A2DCE9;
+            --sand: #E6E5D3;
+            --white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            width: 1920px;
+            height: 1080px;
+            overflow: hidden;
+            font-family: 'Outfit', sans-serif;
+            background: var(--navy);
+            color: var(--white);
+        }
+
+        .scene {
+            position: absolute;
+            top: 0; left: 0;
+            width: 1920px;
+            height: 1080px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 1s ease;
+            pointer-events: none;
+        }
+
+        .scene.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Shared elements */
+        .accent-line {
+            width: 80px;
+            height: 3px;
+            background: var(--teal);
+            margin: 0 auto;
+            opacity: 0;
+            transform: scaleX(0);
+            transition: all 0.6s ease 0.3s;
+        }
+
+        .active .accent-line {
+            opacity: 1;
+            transform: scaleX(1);
+        }
+
+        .section-tag {
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--teal);
+            margin-bottom: 16px;
+            opacity: 0;
+            transition: opacity 0.6s ease 0.1s;
+        }
+
+        .active .section-tag { opacity: 1; }
+
+        /* =============== SCENE 1: Opening — Logo =============== */
+        .scene-1 {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--midnight) 100%);
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .logo-monogram {
+            width: 160px; height: 160px;
+            opacity: 0; transform: scale(0.5);
+            transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .scene-1.active .logo-monogram { opacity: 1; transform: scale(1); }
+
+        .logo-text {
+            font-size: 32px; font-weight: 300;
+            letter-spacing: 8px; text-transform: uppercase;
+            color: var(--light-blue);
+            opacity: 0; transform: translateY(20px);
+            transition: all 0.8s ease 0.6s;
+        }
+        .scene-1.active .logo-text { opacity: 1; transform: translateY(0); }
+
+        .logo-sub {
+            font-size: 18px; color: rgba(255,255,255,0.5);
+            letter-spacing: 3px; text-transform: uppercase;
+            opacity: 0; transition: opacity 0.8s ease 1s;
+        }
+        .scene-1.active .logo-sub { opacity: 1; }
+
+        /* =============== SCENE 2: The Emotional Hook =============== */
+        .scene-2 {
+            background: linear-gradient(180deg, var(--navy) 0%, #1a2d55 100%);
+            flex-direction: column;
+            gap: 24px;
+            padding: 0 240px;
+        }
+
+        .hook-line {
+            font-size: 48px;
+            font-weight: 300;
+            text-align: center;
+            line-height: 1.5;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .scene-2.active .hook-line:nth-child(1) { opacity: 1; transform: translateY(0); transition: all 0.8s ease 0.3s; }
+        .scene-2.active .hook-line:nth-child(2) { opacity: 1; transform: translateY(0); transition: all 0.8s ease 1.2s; }
+        .scene-2.active .hook-line:nth-child(3) { opacity: 1; transform: translateY(0); transition: all 0.8s ease 2.2s; }
+
+        .hook-line em {
+            color: var(--teal);
+            font-style: normal;
+            font-weight: 500;
+        }
+
+        /* =============== SCENE 3: Why Early Decisions Matter =============== */
+        .scene-3 {
+            background: var(--white);
+            color: var(--navy);
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .s3-title {
+            font-size: 52px;
+            font-weight: 700;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.7s ease 0.1s;
+        }
+        .scene-3.active .s3-title { opacity: 1; transform: translateY(0); }
+
+        .s3-sub {
+            font-size: 22px;
+            color: #5a6a7a;
+            font-family: 'Inter', sans-serif;
+            text-align: center;
+            max-width: 900px;
+            line-height: 1.6;
+            opacity: 0;
+            transition: opacity 0.8s ease 0.5s;
+        }
+        .scene-3.active .s3-sub { opacity: 1; }
+
+        .impact-row {
+            display: flex;
+            gap: 50px;
+        }
+
+        .impact-card {
+            text-align: center;
+            width: 300px;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.7s ease;
+        }
+
+        .scene-3.active .impact-card:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.8s; }
+        .scene-3.active .impact-card:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 1.1s; }
+        .scene-3.active .impact-card:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 1.4s; }
+        .scene-3.active .impact-card:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 1.7s; }
+
+        .impact-icon {
+            width: 64px; height: 64px;
+            background: #f0f4f8;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+        }
+
+        .impact-card h4 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 6px;
+        }
+
+        .impact-card p {
+            font-size: 15px;
+            color: #7a8a9a;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* =============== SCENE 4: Financial Volatility =============== */
+        .scene-4 {
+            background: var(--midnight);
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .s4-title {
+            font-size: 44px;
+            font-weight: 700;
+            text-align: center;
+            max-width: 1100px;
+            opacity: 0;
+            transition: all 0.7s ease 0.1s;
+        }
+        .scene-4.active .s4-title { opacity: 1; }
+
+        .fin-stats {
+            display: flex;
+            gap: 80px;
+        }
+
+        .fin-stat {
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .scene-4.active .fin-stat:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.4s; }
+        .scene-4.active .fin-stat:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.7s; }
+        .scene-4.active .fin-stat:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 1.0s; }
+
+        .fin-num {
+            font-size: 80px;
+            font-weight: 800;
+            color: var(--orange);
+            line-height: 1;
+        }
+
+        .fin-label {
+            font-size: 18px;
+            color: rgba(255,255,255,0.7);
+            margin-top: 12px;
+            max-width: 280px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .fin-note {
+            font-size: 20px;
+            color: rgba(255,255,255,0.6);
+            max-width: 900px;
+            text-align: center;
+            line-height: 1.6;
+            opacity: 0;
+            transition: opacity 0.8s ease 1.4s;
+        }
+        .scene-4.active .fin-note { opacity: 1; }
+
+        /* =============== SCENE 5: Expert Impact Stats =============== */
+        .scene-5 {
+            background: linear-gradient(135deg, #f7f9fc 0%, #edf1f6 100%);
+            color: var(--navy);
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .s5-title {
+            font-size: 48px;
+            font-weight: 700;
+            text-align: center;
+            opacity: 0;
+            transition: all 0.7s ease 0.1s;
+        }
+        .scene-5.active .s5-title { opacity: 1; }
+
+        .evidence-row {
+            display: flex;
+            gap: 60px;
+        }
+
+        .evidence-card {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 60px 50px;
+            text-align: center;
+            width: 480px;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.06);
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.7s ease;
+        }
+
+        .scene-5.active .evidence-card:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.4s; }
+        .scene-5.active .evidence-card:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.7s; }
+
+        .evidence-num {
+            font-size: 72px;
+            font-weight: 800;
+            color: var(--teal);
+            line-height: 1;
+        }
+
+        .evidence-label {
+            font-size: 20px;
+            color: #5a6a7a;
+            margin-top: 16px;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.5;
+        }
+
+        .s5-note {
+            font-size: 20px;
+            color: #7a8a9a;
+            max-width: 900px;
+            text-align: center;
+            line-height: 1.6;
+            font-family: 'Inter', sans-serif;
+            opacity: 0;
+            transition: opacity 0.8s ease 1.1s;
+        }
+        .scene-5.active .s5-note { opacity: 1; }
+
+        /* =============== SCENE 6: The Old Way =============== */
+        .scene-6 {
+            background: var(--white);
+            color: var(--navy);
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .s6-title {
+            font-size: 48px;
+            font-weight: 700;
+            text-align: center;
+            opacity: 0;
+            transition: all 0.7s ease 0.1s;
+        }
+        .scene-6.active .s6-title { opacity: 1; }
+
+        .old-way-row {
+            display: flex;
+            gap: 40px;
+        }
+
+        .old-card {
+            background: #fef5f0;
+            border-left: 4px solid var(--orange);
+            border-radius: 12px;
+            padding: 40px;
+            width: 380px;
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.6s ease;
+        }
+
+        .scene-6.active .old-card:nth-child(1) { opacity: 1; transform: translateX(0); transition-delay: 0.3s; }
+        .scene-6.active .old-card:nth-child(2) { opacity: 1; transform: translateX(0); transition-delay: 0.6s; }
+        .scene-6.active .old-card:nth-child(3) { opacity: 1; transform: translateX(0); transition-delay: 0.9s; }
+
+        .old-card h3 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--orange);
+            margin-bottom: 12px;
+        }
+
+        .old-card p {
+            font-size: 17px;
+            color: #5a6a7a;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.5;
+        }
+
+        .s6-note {
+            font-size: 22px;
+            color: var(--navy);
+            font-weight: 500;
+            max-width: 900px;
+            text-align: center;
+            line-height: 1.5;
+            opacity: 0;
+            transition: opacity 0.8s ease 1.3s;
+        }
+        .scene-6.active .s6-note { opacity: 1; }
+        .s6-note em { color: var(--teal); font-style: normal; font-weight: 600; }
+
+        /* =============== SCENE 7: How ClearOnc Works =============== */
+        .scene-7 {
+            background: linear-gradient(135deg, var(--navy) 0%, #1e3260 100%);
+            flex-direction: column;
+            gap: 50px;
+        }
+
+        .s7-title {
+            font-size: 48px;
+            font-weight: 700;
+            text-align: center;
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+        .scene-7.active .s7-title { opacity: 1; }
+
+        .workflow-row {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        .wf-step {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 20px;
+            padding: 40px 36px;
+            width: 380px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.7s ease;
+        }
+
+        .scene-7.active .wf-step:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.4s; }
+        .scene-7.active .wf-step:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.8s; }
+        .scene-7.active .wf-step:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 1.2s; }
+
+        .wf-num {
+            width: 52px; height: 52px;
+            border-radius: 50%;
+            background: var(--teal);
+            color: var(--white);
+            font-size: 22px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+        }
+
+        .wf-step h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .wf-step p {
+            font-size: 16px;
+            color: rgba(255,255,255,0.7);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.5;
+        }
+
+        .wf-teal {
+            color: var(--teal);
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 12px;
+        }
+
+        .wf-connector {
+            display: flex;
+            align-items: center;
+            margin-top: 50px;
+            opacity: 0;
+            transition: opacity 0.5s ease 1.5s;
+        }
+        .scene-7.active .wf-connector { opacity: 0.5; }
+
+        /* =============== SCENE 8: Speed Reveal =============== */
+        .scene-8 {
+            background: linear-gradient(135deg, var(--teal) 0%, #1cb5a7 100%);
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .big-number {
+            font-size: 220px;
+            font-weight: 800;
+            color: var(--white);
+            line-height: 1;
+            opacity: 0;
+            transform: scale(0.3);
+            transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s;
+        }
+        .scene-8.active .big-number { opacity: 1; transform: scale(1); }
+
+        .big-label {
+            font-size: 44px;
+            font-weight: 300;
+            color: rgba(255,255,255,0.9);
+            opacity: 0;
+            transition: opacity 0.8s ease 0.8s;
+        }
+        .scene-8.active .big-label { opacity: 1; }
+
+        .big-sub {
+            font-size: 22px;
+            color: rgba(255,255,255,0.6);
+            margin-top: 8px;
+            opacity: 0;
+            transition: opacity 0.8s ease 1.2s;
+        }
+        .scene-8.active .big-sub { opacity: 1; }
+
+        /* =============== SCENE 9: Care Companion Journey =============== */
+        .scene-9 {
+            background: var(--navy);
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .s9-title {
+            font-size: 44px;
+            font-weight: 700;
+            text-align: center;
+            opacity: 0;
+            transition: all 0.7s ease 0.1s;
+        }
+        .scene-9.active .s9-title { opacity: 1; }
+
+        .s9-sub {
+            font-size: 22px;
+            color: rgba(255,255,255,0.7);
+            text-align: center;
+            max-width: 800px;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.5;
+            opacity: 0;
+            transition: opacity 0.7s ease 0.4s;
+        }
+        .scene-9.active .s9-sub { opacity: 1; }
+
+        .journey-row {
+            display: flex;
+            gap: 24px;
+        }
+
+        .j-stage {
+            background: rgba(36, 200, 185, 0.1);
+            border: 1px solid rgba(36, 200, 185, 0.25);
+            border-radius: 16px;
+            padding: 32px 28px;
+            width: 260px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .scene-9.active .j-stage:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.6s; }
+        .scene-9.active .j-stage:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.8s; }
+        .scene-9.active .j-stage:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 1.0s; }
+        .scene-9.active .j-stage:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 1.2s; }
+
+        .j-stage h4 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--teal);
+            margin-bottom: 8px;
+        }
+
+        .j-stage p {
+            font-size: 14px;
+            color: rgba(255,255,255,0.6);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.4;
+        }
+
+        .j-connector {
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.5s ease 1.4s;
+        }
+        .scene-9.active .j-connector { opacity: 0.4; }
+
+        .s9-bottom {
+            font-size: 20px;
+            color: rgba(255,255,255,0.7);
+            font-weight: 300;
+            opacity: 0;
+            transition: opacity 0.8s ease 1.6s;
+        }
+        .scene-9.active .s9-bottom { opacity: 1; }
+        .s9-bottom em { color: var(--teal); font-style: normal; font-weight: 500; }
+
+        /* =============== SCENE 10: Value for All =============== */
+        .scene-10 {
+            background: var(--white);
+            color: var(--navy);
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .s10-title {
+            font-size: 48px;
+            font-weight: 700;
+            text-align: center;
+            opacity: 0;
+            transition: all 0.7s ease 0.1s;
+        }
+        .scene-10.active .s10-title { opacity: 1; }
+
+        .value-row {
+            display: flex;
+            gap: 30px;
+        }
+
+        .value-card {
+            background: #f7f9fc;
+            border-radius: 20px;
+            padding: 36px 32px;
+            width: 380px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .scene-10.active .value-card:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.3s; }
+        .scene-10.active .value-card:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.6s; }
+        .scene-10.active .value-card:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.9s; }
+
+        .value-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--teal);
+        }
+
+        .value-card li {
+            list-style: none;
+            font-size: 15px;
+            color: #5a6a7a;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.5;
+            padding: 6px 0;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .value-card li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 12px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--teal);
+        }
+
+        /* =============== SCENE 11: Moffitt Authority =============== */
+        .scene-11 {
+            background: linear-gradient(135deg, var(--navy) 0%, #1a2d55 100%);
+            flex-direction: column;
+            gap: 36px;
+            padding: 0 200px;
+        }
+
+        .s11-title {
+            font-size: 48px;
+            font-weight: 700;
+            text-align: center;
+            opacity: 0;
+            transition: all 0.7s ease 0.1s;
+        }
+        .scene-11.active .s11-title { opacity: 1; }
+
+        .moffitt-row {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .moffitt-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.6s ease;
+        }
+
+        .scene-11.active .moffitt-item:nth-child(1) { opacity: 1; transform: translateX(0); transition-delay: 0.4s; }
+        .scene-11.active .moffitt-item:nth-child(2) { opacity: 1; transform: translateX(0); transition-delay: 0.6s; }
+        .scene-11.active .moffitt-item:nth-child(3) { opacity: 1; transform: translateX(0); transition-delay: 0.8s; }
+        .scene-11.active .moffitt-item:nth-child(4) { opacity: 1; transform: translateX(0); transition-delay: 1.0s; }
+
+        .moffitt-check {
+            width: 40px; height: 40px;
+            background: rgba(36, 200, 185, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .moffitt-item span {
+            font-size: 20px;
+            font-family: 'Inter', sans-serif;
+            color: rgba(255,255,255,0.85);
+        }
+
+        .s11-note {
+            font-size: 20px;
+            color: rgba(255,255,255,0.6);
+            text-align: center;
+            max-width: 800px;
+            line-height: 1.6;
+            font-family: 'Inter', sans-serif;
+            opacity: 0;
+            transition: opacity 0.8s ease 1.3s;
+        }
+        .scene-11.active .s11-note { opacity: 1; }
+
+        /* =============== SCENE 12: Final CTA =============== */
+        .scene-12 {
+            background: linear-gradient(135deg, var(--navy) 0%, #152850 50%, var(--midnight) 100%);
+            flex-direction: column;
+            gap: 36px;
+        }
+
+        .cta-h {
+            font-size: 64px;
+            font-weight: 700;
+            text-align: center;
+            max-width: 1200px;
+            line-height: 1.2;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease 0.3s;
+        }
+        .scene-12.active .cta-h { opacity: 1; transform: translateY(0); }
+        .cta-h span { color: var(--teal); }
+
+        .cta-sub {
+            font-size: 24px;
+            color: rgba(255,255,255,0.7);
+            font-weight: 300;
+            text-align: center;
+            max-width: 700px;
+            line-height: 1.5;
+            opacity: 0;
+            transition: opacity 0.8s ease 0.8s;
+        }
+        .scene-12.active .cta-sub { opacity: 1; }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--orange);
+            color: var(--white);
+            font-size: 22px;
+            font-weight: 600;
+            padding: 20px 52px;
+            border-radius: 60px;
+            text-decoration: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease 1.1s;
+        }
+        .scene-12.active .cta-btn { opacity: 1; transform: translateY(0); }
+
+        .cta-info {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.8s ease 1.5s;
+        }
+        .scene-12.active .cta-info { opacity: 1; }
+
+        .cta-info span {
+            font-size: 16px;
+            color: rgba(255,255,255,0.4);
+            letter-spacing: 1px;
+        }
+
+        /* =============== Progress & Controls =============== */
+        .progress-bar {
+            position: fixed;
+            bottom: 0; left: 0;
+            height: 4px;
+            background: var(--teal);
+            transition: width 0.3s ease;
+            z-index: 100;
+        }
+
+        .controls {
+            position: fixed;
+            top: 24px; right: 24px;
+            z-index: 100;
+            display: flex;
+            gap: 10px;
+        }
+
+        .controls button {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: white;
+            padding: 8px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            backdrop-filter: blur(10px);
+        }
+
+        .controls button:hover { background: rgba(0,0,0,0.5); }
+
+        .scene-counter {
+            position: fixed;
+            bottom: 16px; right: 24px;
+            font-size: 13px;
+            color: rgba(255,255,255,0.35);
+            font-family: 'Inter', sans-serif;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="controls">
+        <button onclick="toggleAutoplay()" id="playBtn">Pause</button>
+        <button onclick="prevScene()">Prev</button>
+        <button onclick="nextScene()">Next</button>
+    </div>
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="scene-counter" id="sceneCounter"></div>
+
+    <!-- SCENE 1: Logo Reveal (0-6s) -->
+    <div class="scene scene-1" data-duration="6000">
+        <svg class="logo-monogram" viewBox="0 0 200 150" fill="none">
+            <circle cx="65" cy="75" r="45" stroke="white" stroke-width="6" fill="none"/>
+            <circle cx="120" cy="75" r="35" stroke="white" stroke-width="6" fill="none"/>
+            <circle cx="120" cy="75" r="12" stroke="white" stroke-width="4" fill="none"/>
+            <circle cx="152" cy="42" r="10" stroke="white" stroke-width="4" fill="none"/>
+        </svg>
+        <div class="logo-text">ClearOnc Insights</div>
+        <div class="logo-sub">By Moffitt Cancer Center</div>
+    </div>
+
+    <!-- SCENE 2: Emotional Hook (6-18s) -->
+    <div class="scene scene-2" data-duration="12000">
+        <div class="hook-line">The moment someone hears, <em>"You have cancer,"</em></div>
+        <div class="hook-line">time feels different.</div>
+        <div class="hook-line">Every decision matters. <em>Every day feels urgent.</em></div>
+    </div>
+
+    <!-- SCENE 3: Early Decisions (18-30s) -->
+    <div class="scene scene-3" data-duration="12000">
+        <div class="section-tag">Why It Matters</div>
+        <div class="s3-title">Early Decisions Define Everything</div>
+        <div class="accent-line"></div>
+        <div class="s3-sub">A diagnosis disrupts families, workplaces, and lives in an instant. Treatment plans set in motion determine the trajectory of the entire journey.</div>
+        <div class="impact-row">
+            <div class="impact-card">
+                <div class="impact-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#20366A" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                </div>
+                <h4>Survival Outcomes</h4>
+                <p>First decisions shape long-term prognosis</p>
+            </div>
+            <div class="impact-card">
+                <div class="impact-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#20366A" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <h4>Side Effects</h4>
+                <p>Treatment choices affect quality of life</p>
+            </div>
+            <div class="impact-card">
+                <div class="impact-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#20366A" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                </div>
+                <h4>Family Confidence</h4>
+                <p>Clarity builds trust in the care journey</p>
+            </div>
+            <div class="impact-card">
+                <div class="impact-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#20366A" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                </div>
+                <h4>Total Cost of Care</h4>
+                <p>Early accuracy reduces downstream spend</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCENE 4: Financial Volatility (30-42s) -->
+    <div class="scene scene-4" data-duration="12000">
+        <div class="section-tag">Financial Reality</div>
+        <div class="s4-title">Where Clinical Complexity Becomes<br>Financial Volatility</div>
+        <div class="accent-line"></div>
+        <div class="fin-stats">
+            <div class="fin-stat">
+                <div class="fin-num">10-15%</div>
+                <div class="fin-label">Of total medical spend</div>
+            </div>
+            <div class="fin-stat">
+                <div class="fin-num">20-40%</div>
+                <div class="fin-label">Of catastrophic claims in self-funded plans</div>
+            </div>
+            <div class="fin-stat">
+                <div class="fin-num">$1M+</div>
+                <div class="fin-label">Annual cost for a single complex case</div>
+            </div>
+        </div>
+        <div class="fin-note">Small changes in treatment decisions can swing costs by $10K-$100K per case.<br>Volatility reflects decision uncertainty at moments when certainty matters most.</div>
+    </div>
+
+    <!-- SCENE 5: Evidence-Based Impact (42-52s) -->
+    <div class="scene scene-5" data-duration="10000">
+        <div class="section-tag" style="color: var(--navy);">Evidence-Based Impact</div>
+        <div class="s5-title">The Impact of Expert Insight</div>
+        <div class="accent-line"></div>
+        <div class="evidence-row">
+            <div class="evidence-card">
+                <div class="evidence-num">20-40%</div>
+                <div class="evidence-label">Of oncology second opinions result in a meaningful treatment change</div>
+            </div>
+            <div class="evidence-card">
+                <div class="evidence-num">30-60%</div>
+                <div class="evidence-label">Result in refined or clarified diagnoses</div>
+            </div>
+        </div>
+        <div class="s5-note">These insights shift therapy choices, timing, and intensity — directly impacting outcomes and long-term cost of care.</div>
+    </div>
+
+    <!-- SCENE 6: The Old Way (52-64s) -->
+    <div class="scene scene-6" data-duration="12000">
+        <div class="section-tag" style="color: var(--navy);">The Problem</div>
+        <div class="s6-title">When Expertise Arrives Too Late</div>
+        <div class="accent-line"></div>
+        <div class="old-way-row">
+            <div class="old-card">
+                <h3>Episodic</h3>
+                <p>Answering one question once — without follow-through as treatment evolves</p>
+            </div>
+            <div class="old-card">
+                <h3>Manual</h3>
+                <p>Dependent on record chasing and administrative friction that delays care</p>
+            </div>
+            <div class="old-card">
+                <h3>Slow</h3>
+                <p>Often requiring 4 to 6 weeks — by then, treatment has already begun</p>
+            </div>
+        </div>
+        <div class="s6-note">By the time expertise arrives, the window to change direction has narrowed.<br><em>ClearOnc changes when expertise shows up — and how long it stays.</em></div>
+    </div>
+
+    <!-- SCENE 7: How ClearOnc Works (64-80s) -->
+    <div class="scene scene-7" data-duration="16000">
+        <div class="section-tag">Our Solution</div>
+        <div class="s7-title">How ClearOnc Works</div>
+        <div class="accent-line"></div>
+        <div class="workflow-row">
+            <div class="wf-step">
+                <div class="wf-num">1</div>
+                <h3>Automated Intake & Synthesis</h3>
+                <p>Records collected, organized, and summarized using advanced AI. Missing data flagged early.</p>
+                <div class="wf-teal">Automation saves time, not touch.</div>
+            </div>
+            <div class="wf-connector">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+            <div class="wf-step">
+                <div class="wf-num">2</div>
+                <h3>Moffitt Subspecialty Review</h3>
+                <p>Each case matched to the right subspecialist by disease type and therapeutic focus.</p>
+                <div class="wf-teal">Physicians retain full authority.</div>
+            </div>
+            <div class="wf-connector">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+            <div class="wf-step">
+                <div class="wf-num">3</div>
+                <h3>Clear, Actionable Guidance</h3>
+                <p>Searchable, referenceable, traceable to real-time guidelines — signed by expert oncologists.</p>
+                <div class="wf-teal">Delivered in 4-6 days, not weeks.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCENE 8: Speed Reveal (80-88s) -->
+    <div class="scene scene-8" data-duration="8000">
+        <div class="big-number">4-6 days</div>
+        <div class="big-label">Expert oncology review — not 4-6 weeks</div>
+        <div class="big-sub">Enabling meaningful course correction while decisions can still change outcomes</div>
+    </div>
+
+    <!-- SCENE 9: Care Companion Journey (88-104s) -->
+    <div class="scene scene-9" data-duration="16000">
+        <div class="section-tag">Continuous Care</div>
+        <div class="s9-title">The Care Companion Model</div>
+        <div class="accent-line"></div>
+        <div class="s9-sub">Cancer is not a single event — it's a series of inflection points. ClearOnc stays with members at every turning point.</div>
+        <div class="journey-row">
+            <div class="j-stage">
+                <h4>At Diagnosis</h4>
+                <p>Confirm accuracy, staging, and recommended diagnostics</p>
+            </div>
+            <div class="j-connector">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+            <div class="j-stage">
+                <h4>Treatment Planning</h4>
+                <p>Right therapy for the right patient at the right time</p>
+            </div>
+            <div class="j-connector">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+            <div class="j-stage">
+                <h4>When Things Change</h4>
+                <p>Re-engage when cancer progresses or new therapies emerge</p>
+            </div>
+            <div class="j-connector">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+            <div class="j-stage">
+                <h4>Through Survivorship</h4>
+                <p>Long-term monitoring, prevention, and follow-up care</p>
+            </div>
+        </div>
+        <div class="s9-bottom">Not just a second opinion. <em>A care companion for the entire journey.</em></div>
+    </div>
+
+    <!-- SCENE 10: Value for All (104-118s) -->
+    <div class="scene scene-10" data-duration="14000">
+        <div class="section-tag" style="color: var(--navy);">Multi-Level Value</div>
+        <div class="s10-title">Impact at Every Level</div>
+        <div class="accent-line"></div>
+        <div class="value-row">
+            <div class="value-card">
+                <h3>For Members</h3>
+                <ul>
+                    <li>Rapid access to trusted cancer expertise — in days</li>
+                    <li>Clarity facing the hardest medical decisions</li>
+                    <li>Confidence as treatment plans evolve</li>
+                    <li>Continued support throughout the journey</li>
+                </ul>
+            </div>
+            <div class="value-card">
+                <h3>For Care Managers</h3>
+                <ul>
+                    <li>Structured and fast record synthesis</li>
+                    <li>Expert-backed, referenceable recommendations</li>
+                    <li>Real-time guideline alignment</li>
+                    <li>Support when plans change</li>
+                </ul>
+            </div>
+            <div class="value-card">
+                <h3>For Employers & Health Plans</h3>
+                <ul>
+                    <li>Earlier expert insight — before high-cost escalation</li>
+                    <li>Reduced treatment variability</li>
+                    <li>Improved catastrophic claim predictability</li>
+                    <li>Standardized, auditable oncology review</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCENE 11: Moffitt Authority (118-132s) -->
+    <div class="scene scene-11" data-duration="14000">
+        <div class="section-tag">Why Moffitt</div>
+        <div class="s11-title">Grounded in Moffitt Excellence</div>
+        <div class="accent-line"></div>
+        <div class="moffitt-row">
+            <div class="moffitt-item">
+                <div class="moffitt-check">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#24C8B9" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <span>Deep subspecialization across <strong>50+ cancer types</strong></span>
+            </div>
+            <div class="moffitt-item">
+                <div class="moffitt-check">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#24C8B9" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <span>Advanced and <strong>rare cancer</strong> therapies</span>
+            </div>
+        </div>
+        <div class="moffitt-row" style="margin-top: 16px;">
+            <div class="moffitt-item">
+                <div class="moffitt-check">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#24C8B9" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <span>Prevention and early detection</span>
+            </div>
+            <div class="moffitt-item">
+                <div class="moffitt-check">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#24C8B9" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <span>Outcomes <strong>up to 4x better</strong> in select high-acuity cancers</span>
+            </div>
+        </div>
+        <div class="s11-note">NCI-Designated Comprehensive Cancer Center — one of the nation's leading cancer centers. For patients, guidance from physicians who see complex cases every day.</div>
+    </div>
+
+    <!-- SCENE 12: Final CTA (132-180s) -->
+    <div class="scene scene-12" data-duration="12000">
+        <div class="cta-h">
+            The Right Expertise. Anywhere.<br>
+            <span>Without the Wait.</span>
+        </div>
+        <div class="cta-sub">Expert oncology intelligence — powered by Moffitt Cancer Center.<br>Delivered in days. For every turning point.</div>
+        <div class="cta-btn">
+            Request a Demo
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="cta-info">
+            <span>clearonc.com</span>
+            <span>|</span>
+            <span>info@clearonc.com</span>
+            <span>|</span>
+            <span>An AccelerOnc Studio Company</span>
+        </div>
+    </div>
+
+    <script>
+        const scenes = document.querySelectorAll('.scene');
+        const progressBar = document.getElementById('progressBar');
+        const sceneCounter = document.getElementById('sceneCounter');
+        let currentScene = 0;
+        let autoplay = true;
+        let timer = null;
+        let progressTimer = null;
+        let startTime = 0;
+
+        // Calculate total duration for progress
+        const totalDuration = Array.from(scenes).reduce((sum, s) => sum + parseInt(s.dataset.duration || 8000), 0);
+        let elapsedTotal = 0;
+
+        function showScene(index) {
+            scenes.forEach(s => s.classList.remove('active'));
+            scenes[index].classList.add('active');
+
+            // Recalculate elapsed total
+            elapsedTotal = 0;
+            for (let i = 0; i < index; i++) {
+                elapsedTotal += parseInt(scenes[i].dataset.duration || 8000);
+            }
+
+            currentScene = index;
+            sceneCounter.textContent = `Scene ${index + 1} / ${scenes.length}`;
+
+            if (autoplay) startAutoAdvance();
+        }
+
+        function startAutoAdvance() {
+            clearTimeout(timer);
+            clearInterval(progressTimer);
+            const duration = parseInt(scenes[currentScene].dataset.duration) || 8000;
+            startTime = Date.now();
+
+            progressTimer = setInterval(() => {
+                const elapsed = Date.now() - startTime;
+                const globalPct = ((elapsedTotal + elapsed) / totalDuration) * 100;
+                progressBar.style.width = Math.min(globalPct, 100) + '%';
+            }, 30);
+
+            timer = setTimeout(() => {
+                clearInterval(progressTimer);
+                if (currentScene < scenes.length - 1) {
+                    showScene(currentScene + 1);
+                } else {
+                    progressBar.style.width = '100%';
+                }
+            }, duration);
+        }
+
+        function nextScene() {
+            if (currentScene < scenes.length - 1) showScene(currentScene + 1);
+        }
+
+        function prevScene() {
+            if (currentScene > 0) showScene(currentScene - 1);
+        }
+
+        function toggleAutoplay() {
+            autoplay = !autoplay;
+            document.getElementById('playBtn').textContent = autoplay ? 'Pause' : 'Play';
+            if (autoplay) startAutoAdvance();
+            else { clearTimeout(timer); clearInterval(progressTimer); }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextScene(); }
+            if (e.key === 'ArrowLeft') prevScene();
+            if (e.key === 'p') toggleAutoplay();
+        });
+
+        showScene(0);
+    </script>
+</body>
+</html>

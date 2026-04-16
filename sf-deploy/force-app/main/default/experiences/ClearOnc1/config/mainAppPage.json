@@ -1,0 +1,11 @@
+{
+  "cmsSettings" : { },
+  "currentThemeId" : "b7e9d336-ed7f-4073-b8b0-0352dcf13cda",
+  "headMarkup" : "<script>\n    \n    function getCaseIdFromUrl() {\n        const url = window.location.href;\n        let recordId = null;\n\n        // Option 1: If Case ID is part of the path (e.g., /s/case/500xxxxxxxxxxxx/detail)\n        const pathSegments = url.split('/');\n        const caseIndex = pathSegments.indexOf('case');\n        if (caseIndex > -1 && pathSegments.length > caseIndex + 1) {\n            // Assuming the ID is the segment after 'case'\n            recordId = pathSegments[caseIndex + 1];\n            // Basic validation to check if it looks like a Salesforce ID (starts with 003 or 500)\n            if (!recordId.startsWith('500') && !recordId.startsWith('003')) {\n                recordId = null; // Not a valid Case ID\n            }\n        }\n\n        // Option 2: If Case ID is a query parameter (e.g., /s/detail?id=500xxxxxxxxxxxx)\n        if (!recordId) { // Only try this if not found in path\n            const urlParams = new URLSearchParams(window.location.search);\n            recordId = urlParams.get('id');\n            // Basic validation\n            if (recordId && !recordId.startsWith('500') && !recordId.startsWith('003')) {\n                recordId = null;\n            }\n        }\n\n        return recordId;\n    }\n    \n\twindow.addEventListener(\n\t\t\"onEmbeddedMessagingReady\", () => {\n            let currentCaseId = getCaseIdFromUrl();\n            console.log('case id: '+currentCaseId);\n\t\t\tconsole.log(\n\t\t\t\t'Inside Messaging Ready Block'\n\t\t\t);\n\t\t\t/*let caseId = '500WC00000HL9BOYA1';\n\t\t\tconsole.log( \n\t\t\t\t'User Id', \n\t\t\t\tcaseId\n\t\t\t);*/\n\t\t\tembeddedservice_bootstrap.prechatAPI.setHiddenPrechatFields(\n\t\t\t\t{\n\t\t\t\t\t'caseId' : currentCaseId\n\t\t\t\t}\n\t\t\t);\n\t\t}\n\t);\n</script>",
+  "id" : "92f3824a-4c4a-462f-b1dd-367efc2be930",
+  "isLockerServiceEnabled" : true,
+  "isRelaxedCSPLevel" : true,
+  "label" : "main",
+  "templateName" : "Service Community Template",
+  "type" : "appPage"
+}

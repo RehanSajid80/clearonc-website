@@ -1,0 +1,13 @@
+{
+  "componentVariants" : [ {
+    "id" : "e8165fed-6f0f-4d4c-bcf4-545d54fc7d33",
+    "propertyOverrides" : {
+      "activeViewId" : "3ce6e410-3775-4df2-81b1-c6dfaa7795e0"
+    },
+    "targetId" : "8c8d554b-4668-443d-b361-ab0ddb372816",
+    "type" : "componentVariant"
+  } ],
+  "developerName" : "Case_Detail_Case_Detail_Physician_1_Page",
+  "id" : "b14c6aaa-d977-4272-a232-28b4e2ffdc7a",
+  "type" : "experienceVariation"
+}

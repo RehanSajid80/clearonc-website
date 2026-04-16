@@ -1,0 +1,46 @@
+{
+  "appPageId" : "92f3824a-4c4a-462f-b1dd-367efc2be930",
+  "componentName" : "siteforce:sldsOneColLayout",
+  "dataProviders" : [ ],
+  "id" : "0a8e98bd-d013-4ceb-b48f-bd7baf0a61e4",
+  "label" : "Error",
+  "regions" : [ {
+    "id" : "c4db6844-15cf-4708-bd16-f8edd55716e2",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : { },
+      "componentName" : "c:navyaLogin",
+      "id" : "e426f844-44be-43ad-a569-7fb72fbb1a32",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "b9ab9f11-f001-4331-a974-f2e3856e316d",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "id" : "d0d1ac81-66dc-4078-8d19-ffcd04b9cd31",
+    "regionName" : "footer",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "Error"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "8673e23a-146f-4838-97d1-633e80ee8737",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "e777998c-5123-4005-9001-f5d4e5201207",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "error"
+}

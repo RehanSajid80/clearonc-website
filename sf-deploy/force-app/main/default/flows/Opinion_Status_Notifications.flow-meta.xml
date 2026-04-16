@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+
+    <actionCalls>
+        <name>Send_CN_Notification</name>
+        <label>Send CN Notification</label>
+        <locationX>176</locationX>
+        <locationY>398</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <faultConnector>
+            <targetReference>Email_Error_Handler</targetReference>
+        </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <stringValue>Expert Opinion Submitted - Case {!$Record.CaseNumber}</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <stringValue>An expert physician has submitted their opinion for Case {!$Record.CaseNumber}.
+
+Patient: {!$Record.Patient__r.Name}
+Cancer Type: {!$Record.Cancer_Type__c}
+
+Please log in to Salesforce to review the submitted expert consult and approve or request revisions.
+
+Thank you,
+ClearOnc Insights</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>$Record.Care_Navigator__r.Email</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+
+    <actionCalls>
+        <name>Send_CCM_Notification</name>
+        <label>Send CCM Notification</label>
+        <locationX>528</locationX>
+        <locationY>398</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <faultConnector>
+            <targetReference>Email_Error_Handler</targetReference>
+        </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <stringValue>Expert Consult Ready for Download - Case {!$Record.CaseNumber}</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <stringValue>The expert consult for Case {!$Record.CaseNumber} has been reviewed and approved by the Care Navigator.
+
+Patient: {!$Record.Patient__r.Name}
+Cancer Type: {!$Record.Cancer_Type__c}
+
+Please log in to the ClearOnc portal to download the Expert Opinion document.
+
+Thank you,
+ClearOnc Insights</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>$Record.Client_Case_Manager__r.Email</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+
+    <assignments>
+        <name>Email_Error_Handler</name>
+        <label>Email Error Handler</label>
+        <locationX>352</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>varErrorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+
+    <decisions>
+        <name>Check_Opinion_Status</name>
+        <label>Check Opinion Status</label>
+        <locationX>352</locationX>
+        <locationY>278</locationY>
+        <defaultConnectorLabel>Other Status</defaultConnectorLabel>
+        <rules>
+            <name>Status_Submitted</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Opinion_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Submitted</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_CN_Email</targetReference>
+            </connector>
+            <label>Submitted</label>
+        </rules>
+        <rules>
+            <name>Status_Approved</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Opinion_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Approved</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_CCM_Email</targetReference>
+            </connector>
+            <label>Approved</label>
+        </rules>
+    </decisions>
+
+    <decisions>
+        <name>Check_CN_Email</name>
+        <label>Check CN Email Exists</label>
+        <locationX>176</locationX>
+        <locationY>338</locationY>
+        <defaultConnectorLabel>No CN Email</defaultConnectorLabel>
+        <rules>
+            <name>CN_Email_Exists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Care_Navigator__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_CN_Notification</targetReference>
+            </connector>
+            <label>Has CN Email</label>
+        </rules>
+    </decisions>
+
+    <decisions>
+        <name>Check_CCM_Email</name>
+        <label>Check CCM Email Exists</label>
+        <locationX>528</locationX>
+        <locationY>338</locationY>
+        <defaultConnectorLabel>No CCM Email</defaultConnectorLabel>
+        <rules>
+            <name>CCM_Email_Exists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Client_Case_Manager__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_CCM_Notification</targetReference>
+            </connector>
+            <label>Has CCM Email</label>
+        </rules>
+    </decisions>
+
+    <environments>Default</environments>
+    <interviewLabel>Opinion Status Notifications {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Opinion Status Notifications</label>
+
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <runInMode>DefaultMode</runInMode>
+
+    <start>
+        <locationX>226</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_Opinion_Status</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Opinion_Status__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+
+    <status>Active</status>
+
+    <variables>
+        <name>varErrorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

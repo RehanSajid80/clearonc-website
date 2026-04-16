@@ -1,0 +1,186 @@
+{
+  "appPageId" : "92f3824a-4c4a-462f-b1dd-367efc2be930",
+  "componentName" : "siteforce:dynamicLayout",
+  "dataProviders" : [ ],
+  "id" : "3ce6e410-3775-4df2-81b1-c6dfaa7795e0",
+  "label" : "Case Detail Physician",
+  "regions" : [ {
+    "components" : [ {
+      "componentAttributes" : {
+        "background" : "background: rgba(0,0,0,0)",
+        "backgroundOverlay" : "rgba(0,0,0,0.5)",
+        "contentAreaWidth" : 100,
+        "sectionConfig" : {
+          "UUID" : "b7706d17-d6ef-4c5b-800d-ba46796cbed6",
+          "columns" : [ {
+            "UUID" : "1a5f9777-5a67-47c6-a299-af7449720836",
+            "columnKey" : "1",
+            "columnName" : "Column 1",
+            "columnWidth" : "12",
+            "seedComponents" : [ ]
+          } ]
+        },
+        "sectionHeight" : 32
+      },
+      "componentName" : "forceCommunity:section",
+      "id" : "b7706d17-d6ef-4c5b-800d-ba46796cbed6",
+      "regions" : [ {
+        "components" : [ {
+          "componentAttributes" : {
+            "recordId" : "{!recordId}"
+          },
+          "componentName" : "forceCommunity:recordHeadline",
+          "id" : "4ccf897f-85ec-44d8-8c87-6b043cdc88f8",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : { },
+          "type" : "component"
+        } ],
+        "id" : "1a5f9777-5a67-47c6-a299-af7449720836",
+        "regionLabel" : "Column 1",
+        "regionName" : "1",
+        "renditionMap" : { },
+        "type" : "region"
+      } ],
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    }, {
+      "componentAttributes" : {
+        "background" : "background: rgba(0,0,0,0)",
+        "backgroundOverlay" : "rgba(0,0,0,0.5)",
+        "contentAreaWidth" : 100,
+        "sectionConfig" : {
+          "UUID" : "54a7674d-fbb9-4ffe-b0fe-d7cc837899a5",
+          "columns" : [ {
+            "UUID" : "fa6b3c43-5eb3-4769-873c-ecd202e45176",
+            "columnKey" : "1",
+            "columnName" : "Column 1",
+            "columnWidth" : "4",
+            "seedComponents" : [ ]
+          }, {
+            "UUID" : "cb9542e0-c3ea-480d-8b78-bd473ba3d676",
+            "columnKey" : "8c790",
+            "columnName" : "Column 2",
+            "columnWidth" : "8",
+            "seedComponents" : [ ]
+          } ]
+        },
+        "sectionHeight" : 300
+      },
+      "componentName" : "forceCommunity:section",
+      "id" : "54a7674d-fbb9-4ffe-b0fe-d7cc837899a5",
+      "regions" : [ {
+        "components" : [ {
+          "componentAttributes" : {
+            "recordId" : "{!recordId}"
+          },
+          "componentName" : "forceCommunity:recordDetail",
+          "id" : "ae6cd441-29d7-42db-abd1-d5e1a248e5a6",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : { },
+          "type" : "component"
+        } ],
+        "id" : "fa6b3c43-5eb3-4769-873c-ecd202e45176",
+        "regionLabel" : "Column 1",
+        "regionName" : "1",
+        "renditionMap" : { },
+        "type" : "region"
+      }, {
+        "components" : [ {
+          "componentAttributes" : {
+            "recordId" : "{!recordId}"
+          },
+          "componentName" : "c:securedMessagingCommunity",
+          "id" : "d3dc0650-63d9-453d-847d-687ff0c6d8b2",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : { },
+          "type" : "component"
+        }, {
+          "componentAttributes" : {
+            "customTitle" : "Patient Files",
+            "parentRecordId" : "{!recordId}",
+            "relatedListName" : "DocumentChecklistItemPR",
+            "showBreadCrumbs" : false,
+            "showCustomTitle" : true,
+            "showManualRefreshButton" : true,
+            "showRowNumbers" : false
+          },
+          "componentName" : "forceCommunity:relatedList",
+          "id" : "f6a7b8c9-d0e1-4f2a-abcd-345678901cde",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : { },
+          "type" : "component"
+        } ],
+        "id" : "cb9542e0-c3ea-480d-8b78-bd473ba3d676",
+        "regionLabel" : "Column 2",
+        "regionName" : "8c790",
+        "renditionMap" : { },
+        "type" : "region"
+      } ],
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    }, {
+      "componentAttributes" : {
+        "background" : "background: rgba(0,0,0,0)",
+        "backgroundOverlay" : "rgba(0,0,0,0.5)",
+        "contentAreaWidth" : 100,
+        "sectionConfig" : {
+          "UUID" : "a1b2c3d4-e5f6-4890-abcd-ef1234567890",
+          "columns" : [ {
+            "UUID" : "f1e2d3c4-b5a6-4890-abcd-ef0987654321",
+            "columnKey" : "1",
+            "columnName" : "Column 1",
+            "columnWidth" : "12",
+            "seedComponents" : [ ]
+          } ]
+        },
+        "sectionHeight" : 32
+      },
+      "componentName" : "forceCommunity:section",
+      "id" : "a1b2c3d4-e5f6-4890-abcd-ef1234567890",
+      "regions" : [ {
+        "components" : [ {
+          "componentAttributes" : {
+            "flowArguments" : "[{\"name\":\"recordId\",\"dataType\":\"String\",\"label\":\"recordId\",\"value\":\"{!recordId}\"}]",
+            "flowName" : "Expert_Opinion_Form"
+          },
+          "componentName" : "forceCommunity:flowCommunity",
+          "id" : "b2c3d4e5-f6a7-4901-bcde-f12345678901",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : { },
+          "type" : "component"
+        } ],
+        "id" : "f1e2d3c4-b5a6-4890-abcd-ef0987654321",
+        "regionLabel" : "Column 1",
+        "regionName" : "1",
+        "renditionMap" : { },
+        "type" : "region"
+      } ],
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "287b89ba-77d0-4f2f-bc13-4a6bc832f939",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "{!Record._Object}: {!Record._Title}"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "6af9d0de-9655-4c13-bf5d-7701958d7fd3",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "a643acc1-7952-4db9-951e-993148a2400d",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "detail-500"
+}
